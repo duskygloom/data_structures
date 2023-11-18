@@ -1,0 +1,11 @@
+# vscode
+.vscode
+
+# c
+*.exe
+*.out
+*.o
+build/
+
+# test
+test.*
