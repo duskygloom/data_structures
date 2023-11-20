@@ -1,5 +1,4 @@
 #include "hash_table.h"
-#include "linked_list.h"
 
 int get_string(char *buffer, int length);
 
@@ -17,9 +16,12 @@ int main()
     fclose(moviefile);
 
     // creating hash table from movie list
-    Node **hash_table = calloc(TABLE_SIZE, sizeof(Node *));
+    HashTable *hash_table = create_hash_table();
     for (int i = 0; i < NUM_MOVIES; ++i) {
-        hash_insert(hash_table, create_node(movie_list[i]));
+        if (!hash_insert(hash_table, movie_list[i])) {
+            printf("Could not insert: ");
+            print_movie(movie_list[i]);
+        }
     }
     check_collision(true);
     putchar('\n');
@@ -30,15 +32,12 @@ int main()
     printf("Movie name: ");
     char movie_name[MOVIE_NAME_LENGTH+1];
     get_string(movie_name, MOVIE_NAME_LENGTH);
-    printf("%s: %d\n", movie_name, hash_function(movie_name));
-    Movie *result = hash_search(hash_table, movie_name);
-    if (result) print_movie(result);
-    else printf("Could not find: %s\n", movie_name);
+    int result = hash_search(hash_table, movie_name);
+    printf("%s: %d(%d)\n", movie_name, result, hash_function(movie_name));
+    if (result == -1) printf("Could not find: %s\n", movie_name);
+    else print_movie(hash_table->array[result]);
 
     // freeing memory
-    for (int i = 0; i < TABLE_SIZE; ++i) {
-        delete_list(hash_table[i]);
-    }
     free(hash_table);
     for (int i = 0; i < NUM_MOVIES; ++i)
         delete_movie(movie_list[i]);

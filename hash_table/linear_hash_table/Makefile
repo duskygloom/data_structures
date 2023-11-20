@@ -1,7 +1,7 @@
 CC		= gcc
 BUILD 	= build
 BINARY	= a.exe
-SOURCES	= $(BUILD)/main.o $(BUILD)/hash_table.o $(BUILD)/movie.o $(BUILD)/linked_list.o
+SOURCES	= $(BUILD)/main.o $(BUILD)/hash_table.o $(BUILD)/movie.o
 
 all: $(BINARY)
 

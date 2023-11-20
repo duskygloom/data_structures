@@ -7,7 +7,6 @@
 #define LOAD_FACTOR         0.65
 
 #include "movie.h"
-#include "linked_list.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,8 +17,16 @@ uint hash_function(char *key);
 
 void check_collision(bool print_collision);
 
-bool hash_insert(Node **table, Node *node);
-Movie *hash_search(Node **table, char *movie_name);
-void hash_print(Node **table);
+typedef struct HashTable {
+    int length;
+    Movie **array;
+} HashTable;
+
+HashTable *create_hash_table(void);
+void delete_hash_table(HashTable *hashtable);
+
+bool hash_insert(HashTable *table, Movie *movie);
+int hash_search(HashTable *table, char *movie_name);
+void hash_print(HashTable *table);
 
 #endif
