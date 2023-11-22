@@ -13,7 +13,7 @@ int main()
     printf("Children of %d are %d and %d.\n", array[3], array[LEFT_CHILD(3)], array[RIGHT_CHILD(3)]);
     printf("BEFORE SORTING\n");
     print_heap(heap);
-    sort_node_parent(heap, 0);
+    sort_heap(heap, 0);
     printf("AFTER SORTING\n");
     print_heap(heap);
     printf("Heap array: ");

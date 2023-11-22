@@ -3,13 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/**
- * @returns
- * 1 if index is a left child
- * else 0
-*/
-#define IS_LEFT_CHILD(index)    (index%2)
-
 static inline void swap(int *ptr1, int *ptr2)
 {
     int temp = *ptr1;
@@ -74,47 +67,11 @@ int count_levels(const Heap *heap)
     return n_branches;
 }
 
-/**
- * @todo
- * the current node is the left node in this implementation
- * but ran across a problem so its buggy for now
-*/
-void sort_node_left(Heap *heap, int index)
+void sort_heap(Heap *heap, int index)
 {
-    if (LEFT_CHILD(index) < heap->length) {
-        sort_node_left(heap, LEFT_CHILD(index));
-        sort_node_left(heap, RIGHT_CHILD(index));
-    }
-    // ignore these cases
-    if ((index == 0 && index < heap->length) || !IS_LEFT_CHILD(index)) return;
-    // variables to avoid long names
-    int *left = heap->array+index;
-    int *parent = heap->array+PARENT_NODE(index);
-    int *right = NULL;
-    if (RIGHT_SIBLING(index) < heap->length)
-        right = heap->array+RIGHT_SIBLING(index);
-    // actual sorting
-    if (*parent < *left && (!right || *left > *right)) {
-        swap(parent, left);
-    }
-    else if (right && *parent < *right) {
-        swap(parent, right);
-    }
-}
-
-/**
- * @todo
- * the current node is the left node in this implementation
- * but ran across a problem so its buggy for now
- * @todo
- * when a node is changed, the nodes below
- * should also be checked and changed
-*/
-void sort_node_parent(Heap *heap, int index)
-{
-    if (LEFT_CHILD(index) < heap->length) {                         // has 1 or 2 branches below
-        sort_node_parent(heap, LEFT_CHILD(index));                         // recurssively reaches the bottom
-        sort_node_parent(heap, RIGHT_CHILD(index));                        // before any operation is done
+    if (LEFT_CHILD(index) < heap->length) {                  // has 1 or 2 branches below
+        sort_heap(heap, LEFT_CHILD(index));                  // recurssively reaches the bottom
+        sort_heap(heap, RIGHT_CHILD(index));                 // before any operation is done
     }
     // ignore these cases
     if (index >= heap->length || LEFT_CHILD(index) >= heap->length) return;
@@ -127,15 +84,15 @@ void sort_node_parent(Heap *heap, int index)
     // actual sorting
     if (*left > *parent && (!right || *left > *right)) {
         swap(parent, left);
-        sort_down(heap, LEFT_CHILD(index));
+        sort_path(heap, LEFT_CHILD(index));
     }
     else if (right && *right > *parent) {
         swap(parent, right);
-        sort_down(heap, RIGHT_CHILD(index));
+        sort_path(heap, RIGHT_CHILD(index));
     }
 }
 
-void sort_down(Heap *heap, int index)
+void sort_path(Heap *heap, int index)
 {
     // index not in heap or has no branch
     if (index >= heap->length || LEFT_CHILD(index) >= heap->length) return;
@@ -148,10 +105,10 @@ void sort_down(Heap *heap, int index)
     // actual sorting
     if (*left > *parent && (!right || *left > *right)) {
         swap(parent, left);
-        sort_down(heap, LEFT_CHILD(index));
+        sort_path(heap, LEFT_CHILD(index));
     }
     else if (right && *right > *parent) {
         swap(parent, right);
-        sort_down(heap, RIGHT_CHILD(index));
+        sort_path(heap, RIGHT_CHILD(index));
     }
 }
