@@ -15,4 +15,4 @@ $(BUILD)/%.o: %.c
 	$(CC) $^ -o $@ -c
 
 clean:
-	rm *.o
+	rm $(BUILD)/*.o
