@@ -1,6 +1,6 @@
 CC		= gcc
 BUILD 	= build
-SOURCES	= $(BUILD)/main.o $(BUILD)/heap.o
+SOURCES	= $(BUILD)/test.o $(BUILD)/heap.o
 BINARY	= a.exe
 
 all: $(BINARY)
