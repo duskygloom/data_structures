@@ -6,6 +6,9 @@
 #include <string.h>
 #include <stdbool.h>
 
+#define MAX_HEAP 1
+#define MIN_HEAP 2
+
 /**
  * @details
  * defines when to replace with left
@@ -17,12 +20,13 @@
  * parent left and right must pointers
  * not values
 */
-static inline bool replace_left(int *parent, int *left, int *right)
+static inline bool replace_left(int *parent, int *left, int *right, int heaptype)
 {
-    // max heap
-    return (bool)(left && *left > *parent && (!right || *left > *right));
-    // min heap
-    // return (bool)(left && *left < *parent && (!right || *left < *right));
+    if (heaptype == MAX_HEAP)
+        return (bool)(left && *left > *parent && (!right || *left > *right));
+    else if (heaptype == MIN_HEAP)
+        return (bool)(left && *left < *parent && (!right || *left < *right));
+    return false;
 }
 
 /**
@@ -31,12 +35,13 @@ static inline bool replace_left(int *parent, int *left, int *right)
  * so REPLACE_WITH_RIGHT should be used in a else if statement
  * after REPLACE_WITH_LEFT
 */
-static inline bool replace_right(int *parent, int *left, int *right)
+static inline bool replace_right(int *parent, int *left, int *right, int heaptype)
 {
-    // max heap
-    return (bool)(right && *right > *parent);
-    // min heap
-    // return (bool)(right && *right < *parent);
+    if (heaptype == MAX_HEAP)
+        return (bool)(right && *right > *parent);
+    else if (heaptype == MIN_HEAP)
+        return (bool)(right && *right < *parent);
+    return false;
 }
 
 static inline void swap(int *a, int *b)
@@ -87,11 +92,11 @@ void replace_with_children(Heap *heap, int index)
     int *right  = NULL;
     if (RIGHT_CHILD(index) < heap->length)
         right   = heap->array+RIGHT_CHILD(index);
-    if (replace_left(parent, left, right)) {
+    if (replace_left(parent, left, right, MAX_HEAP)) {
         swap(left, parent);
         replace_with_children(heap, LEFT_CHILD(index));
     }
-    else if (replace_right(parent, left, right)) {
+    else if (replace_right(parent, left, right, MAX_HEAP)) {
         swap(right, parent);
         replace_with_children(heap, RIGHT_CHILD(index));
     }

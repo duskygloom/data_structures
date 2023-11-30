@@ -9,3 +9,7 @@ build/
 
 # test
 test.*
+
+# drawio backup
+*.drawio.bkp
+
