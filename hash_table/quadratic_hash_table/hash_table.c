@@ -46,7 +46,8 @@ bool hash_insert(HashTable *table, Movie *movie)
     uint hash = hash_function(movie->name);
     int offset = 0, index;
     Movie **array = table->array;
-    for (; offset < TABLE_SIZE; ++offset) {
+    for (int i = 0; i < TABLE_SIZE; ++i) {
+        offset = i*i;
         index = (hash+offset)%TABLE_SIZE;
         if (array[index] && strcmp(array[index]->name, movie->name) == 0)
             return false;
@@ -71,14 +72,15 @@ bool hash_insert(HashTable *table, Movie *movie)
 // }
 // #endif
 
-Movie *hash_search(HashTable *table, char *movie_name)
+Movie *hash_search(HashTable *table, char *moviename)
 {
-    uint hash = hash_function(movie_name);
+    uint hash = hash_function(moviename);
     int offset = 0, index;
     Movie **array = table->array;
-    for (; offset < TABLE_SIZE; ++offset) {
+    for (int i = 0; i < TABLE_SIZE; ++i) {
+        offset = i*i;
         index = (hash+offset)%TABLE_SIZE;
-        if (array[index] && strcmp(array[index]->name, movie_name) == 0)
+        if (array[index] && strcmp(array[index]->name, moviename) == 0)
             return array[index];
     }
     return NULL;

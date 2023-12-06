@@ -20,8 +20,17 @@ uint hash_function(char *key);
 
 void check_collision(bool print_collision);
 
-bool hash_insert(Node **table, Movie *movie);
-Movie *hash_search(Node **table, char *movie_name);
-void hash_print(Node **table);
+typedef struct HashTable {
+    int length;
+    Node **table;
+} HashTable;
+
+HashTable *create_hashtable();
+void delete_hashtable(HashTable *hashtable);
+void print_hashtable(HashTable *hashtable);
+
+bool hash_insert(HashTable *hashtable, Movie *movie);
+Movie *hash_search(HashTable *hashtable, char *moviename);
+void hash_print(HashTable *hashtable);
 
 #endif

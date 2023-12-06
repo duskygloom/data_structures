@@ -4,7 +4,7 @@
 
 int main()
 {
-    Queue *queue = create_queue(3);
+    Queue *queue = create_queue(5);
     print_queue(queue);
     enqueue(queue, 20);
     print_queue(queue);

@@ -5,45 +5,41 @@ int get_string(char *buffer, int length);
 
 int main()
 {
-    Movie *movie_list[NUM_MOVIES];
+    Movie *movielist[NUM_MOVIES];
 
     // filling movie list from file
     FILE *moviefile = fopen(MOVIE_FILE, "r");
     skip_until(moviefile, '\n');                            // skip first line
     for (int i = 0; i < NUM_MOVIES; ++i) {
-        movie_list[i] = get_movie_from_file(moviefile);
-        // print_movie(movie_list[i]);
+        movielist[i] = get_movie_from_file(moviefile);
+        // print_movie(movielist[i]);
     }
     fclose(moviefile);
 
     // creating hash table from movie list
-    Node **hash_table = calloc(TABLE_SIZE, sizeof(Node *));
-    for (int i = 0; i < NUM_MOVIES; ++i) {
-        hash_insert(hash_table, movie_list[i]);
-    }
+    HashTable *hashtable = create_hashtable();
+    for (int i = 0; i < NUM_MOVIES; ++i)
+        hash_insert(hashtable, movielist[i]);
     #ifdef DEBUG_MODE
     check_collision(true);
     putchar('\n');
-    hash_print(hash_table);
+    print_hashtable(hashtable);
     putchar('\n');
     #endif
 
     // searching movie
     printf("Movie name: ");
-    char movie_name[MOVIE_NAME_LENGTH+1];
-    get_string(movie_name, MOVIE_NAME_LENGTH);
-    printf("%s: %d\n", movie_name, hash_function(movie_name));
-    Movie *result = hash_search(hash_table, movie_name);
+    char moviename[MOVIE_NAME_LENGTH+1];
+    get_string(moviename, MOVIE_NAME_LENGTH);
+    printf("%s: %d\n", moviename, hash_function(moviename));
+    Movie *result = hash_search(hashtable, moviename);
     if (result) print_movie(result);
-    else printf("Could not find: %s\n", movie_name);
+    else printf("Could not find: %s\n", moviename);
 
     // freeing memory
-    for (int i = 0; i < TABLE_SIZE; ++i) {
-        delete_list(hash_table[i]);
-    }
-    free(hash_table);
+    delete_hashtable(hashtable);
     for (int i = 0; i < NUM_MOVIES; ++i)
-        delete_movie(movie_list[i]);
+        delete_movie(movielist[i]);
 
     return 0;
 }

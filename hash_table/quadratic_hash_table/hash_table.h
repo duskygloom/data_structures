@@ -1,10 +1,10 @@
 #ifndef HASH_TABLE_H
 #define HASH_TABLE_H
 
-#define TABLE_SIZE          389
+#define TABLE_SIZE          503
 #define NUM_MOVIES          250
 #define MOVIE_FILE          "top_english_movies.csv"
-#define LOAD_FACTOR         0.65
+#define LOAD_FACTOR         0.5
 
 // #define DEBUG_MODE
 
