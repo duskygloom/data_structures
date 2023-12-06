@@ -22,17 +22,18 @@ void delete_queue(Queue *queue)
 
 void print_queue(const Queue *queue)
 {
-    if (queue->front == queue->rear)
-        return;
-    printf("[%d", queue->array[queue->front]);
-    for (int i = queue->front; i < queue->rear; ++i)
-        printf("%d ", queue->array[i%queue->maxsize]);
-    putchar('\n');
+    putchar('[');
+    if (queue->front < queue->rear) {
+        printf("%d", queue->array[queue->front]);
+        for (int i = queue->front+1; i < queue->rear; ++i)
+            printf(", %d", queue->array[i%queue->maxsize]);
+    }
+    printf("]\n");
 }
 
 bool enqueue(Queue *queue, int value)
 {
-    if (queue->front%queue->maxsize - queue->rear%queue->maxsize == 1)
+    if (queue->rear - queue->front == queue->maxsize)
         return false;
     queue->array[(queue->rear)++] = value;
     return true;

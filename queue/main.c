@@ -4,7 +4,7 @@
 
 int main()
 {
-    Queue *queue = create_queue(5);
+    Queue *queue = create_queue(3);
     print_queue(queue);
     enqueue(queue, 20);
     print_queue(queue);
@@ -19,6 +19,14 @@ int main()
     enqueue(queue, 60);
     print_queue(queue);
     enqueue(queue, 70);
+    print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
+    print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
+    print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
+    print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
     print_queue(queue);
     delete_queue(queue);
     return 0;
