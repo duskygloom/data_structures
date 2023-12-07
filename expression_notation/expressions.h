@@ -20,7 +20,7 @@ typedef enum PRIORITY {
     HIGH_PRIORITY
 } Priority;
 
-Priority get_priority(char *operator);
+Priority get_priority(String *operator);
 
 Stack *get_expression();
 
