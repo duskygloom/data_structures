@@ -1,5 +1,7 @@
-#include "linked_list.h"
-#include "hash_table.h"
+#include "linked_stack.h"
+
+#include <stdio.h>
+#include <stdlib.h>
 
 Node *create_node(const Item *item)
 {
@@ -9,24 +11,33 @@ Node *create_node(const Item *item)
     return node;
 }
 
-bool insert_node(Node *head, Node *node)
+void delete_node(Node *node)
 {
-    while (head->next != NULL) {
-        if (node->movie->name == head->movie->name)
-            return false;                                   // no override
-        head = head->next;
-        check_collision(false);
+    if (node) {
+        if (node->item) free(node->item);
+        free(node);
     }
-    head->next = node;
-    return true;
 }
 
-bool delete_list(Node *head)
+void print_node(const Node *node)
 {
-    Node *next;
-    while (head) {
-        next = head->next;
-        delete_node(head);
-        head = next;
-    }
+    if (node == NULL) printf("---\n");
+    else print_item(node->item);
+}
+
+bool list_push(Node *head, const Item *item)
+{
+    Node *newnode = create_node(item);
+    if (newnode == NULL) return false;
+    newnode->next = head;
+    head = newnode;
+    return true; 
+}
+
+bool list_pop(Node *head)
+{
+    if (head == NULL) return false;
+    Node *secondnode = head->next;
+    free(head);
+    head = secondnode;
 }
