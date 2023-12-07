@@ -14,7 +14,7 @@ Node *create_node(const Item *item)
 void delete_node(Node *node)
 {
     if (node) {
-        if (node->item) free(node->item);
+        if (node->item) delete_item(node->item);
         free(node);
     }
 }
@@ -22,10 +22,10 @@ void delete_node(Node *node)
 void print_node(const Node *node)
 {
     if (node == NULL) printf("---\n");
-    else print_item(node->item);
+    else printf("(%s, %d)\n", node->item->key, node->item->value);
 }
 
-bool list_push(Node *head, const Item *item)
+bool push_node(Node *head, const Item *item)
 {
     Node *newnode = create_node(item);
     if (newnode == NULL) return false;
@@ -34,10 +34,34 @@ bool list_push(Node *head, const Item *item)
     return true; 
 }
 
-bool list_pop(Node *head)
+bool pop_node(Node *head)
 {
     if (head == NULL) return false;
     Node *secondnode = head->next;
     free(head);
     head = secondnode;
+}
+
+void print_stack(const Node *node)
+{
+    if (node == NULL) {
+        printf("---\n");
+        return;
+    }
+    printf("(%s, %d)", node->item->key, node->item->value);
+    while (node->next) {
+        node = node->next;
+        printf(" -> (%s, %d)", node->item->key, node->item->value);
+    }
+    putchar('\n');
+}
+
+void delete_stack(Node *node)
+{
+    Node *prev;
+    while (node) {
+        prev = node;
+        node = node->next;
+        free(prev);
+    }
 }

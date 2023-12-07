@@ -1,15 +1,18 @@
 CC		= gcc
-BUILD 	= build
+BUILD	= build
+OBJECTS	= $(BUILD)/hashtable.o $(BUILD)/linked_stack.o $(BUILD)/table_item.o
 BINARY	= a.exe
-SOURCES	= $(BUILD)/main.o $(BUILD)/hash_table.o $(BUILD)/movie.o $(BUILD)/linked_list.o
 
-all: $(BINARY)
+all: main
 
-$(BINARY): $(SOURCES)
-	$(CC) $(SOURCES) -o $(BINARY) -g
+main: $(BUILD)/main.o $(OBJECTS)
+	$(CC) $^ -o $(BINARY) -g
+
+test: $(BUILD)/test.o $(OBJECTS)
+	$(CC) $^ -o $(BINARY) -g
 
 $(BUILD)/%.o: %.c
-	$(CC) $^ -o $@ -c
+	$(CC) $^ -o $@ -c -g
 
 clean:
-	rm $(BUILD)/*
+	rm $(BUILD)/*.o

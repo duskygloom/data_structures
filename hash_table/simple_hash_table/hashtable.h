@@ -20,7 +20,7 @@ void print_item(const Item *item);
 typedef struct HashTable {
     int maxsize;
     int length;
-    Item **items;
+    Item **nodes;
 } HashTable;
 
 HashTable *create_hashtable(int maxsize);

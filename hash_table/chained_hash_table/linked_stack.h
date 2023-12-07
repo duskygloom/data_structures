@@ -14,7 +14,7 @@ Node *create_node(const Item *item);
 void delete_node(Node *node);
 void print_node(const Node *node);
 
-bool list_push(Node *head, const Item *item);
-bool list_pop(Node *head);
+void print_stack(const Node *node);
+void delete_stack(Node *node);
 
 #endif

@@ -1,5 +1,9 @@
 #include "table_item.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 /**
  * @note
  * Copies key and value to item so it is 
@@ -24,5 +28,6 @@ void delete_item(Item *item)
 
 void print_item(const Item *item)
 {
-    printf("%s - %d\n", item->key, item->value);
+    if (item == NULL) printf("---\n");
+    else printf("%s - %d\n", item->key, item->value);
 }
