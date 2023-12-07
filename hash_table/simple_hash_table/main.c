@@ -3,14 +3,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define HASH_TABLE_SIZE 13
+#define HASH_TABLE_SIZE 11
 #define NUM_ITEMS       7
 
 int main()
 {
     HashTable *hashtable = create_hashtable(HASH_TABLE_SIZE);
     putchar('\n');
-    print_hashtable(hashtable, true);
+    print_hashtable(hashtable);
     Item **items = calloc(NUM_ITEMS, sizeof(Item *));
     items[0] = create_item("const", 5);
     items[1] = create_item("sizeof", 6);
@@ -25,12 +25,18 @@ int main()
     }
     free(items);
     putchar('\n');
-    print_hashtable(hashtable, true);
+    print_hashtable(hashtable);
+    print_item(hash_search(hashtable, "break"));
+    print_item(hash_search(hashtable, "const"));
+    print_item(hash_search(hashtable, "return"));
     hash_delete(hashtable, "break");
     hash_delete(hashtable, "const");
     hash_delete(hashtable, "return");
     putchar('\n');
-    print_hashtable(hashtable, true);
+    print_hashtable(hashtable);
+    print_item(hash_search(hashtable, "break"));
+    print_item(hash_search(hashtable, "const"));
+    print_item(hash_search(hashtable, "return"));
     delete_hashtable(hashtable);
     return 0;
 }

@@ -25,7 +25,7 @@ typedef struct HashTable {
 
 HashTable *create_hashtable(int maxsize);
 void delete_hashtable(HashTable *hashtable);
-void print_hashtable(const HashTable *hashtable, bool print_null);
+void print_hashtable(const HashTable *hashtable);
 
 bool hash_insert(HashTable *hashtable, Item *item);
 bool hash_delete(HashTable *hashtable, keytype key);

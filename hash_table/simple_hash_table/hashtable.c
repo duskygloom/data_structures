@@ -36,7 +36,8 @@ void delete_item(Item *item)
 
 void print_item(const Item *item)
 {
-    printf("%s - %d\n", item->key, item->value);
+    if (item) printf("%s - %d\n", item->key, item->value);
+    else printf("---\n");
 }
 
 HashTable *create_hashtable(int maxsize)
@@ -65,14 +66,11 @@ void delete_hashtable(HashTable *hashtable)
     free(hashtable);
 }
 
-void print_hashtable(const HashTable *hashtable, bool print_null)
+void print_hashtable(const HashTable *hashtable)
 {
     for (int i = 0; i < hashtable->maxsize; ++i) {
         printf("%d: ", i);
-        if (hashtable->nodes[i])
-            print_item(hashtable->nodes[i]);
-        else if (print_null) printf("---\n");
-        else putchar('\n');
+        print_item(hashtable->nodes[i]);
     }
 }
 
