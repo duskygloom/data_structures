@@ -1,4 +1,4 @@
-#include "linked_stack.h"
+#include "linked_list.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,13 +29,13 @@ void print_node(const Node *node)
     else printf("(%s, %d)\n", node->item->key, node->item->value);
 }
 
-Node *insert_node(Node **headptr, const Item *item)
+bool insert_node(Node **headptr, const Item *item)
 {
     Node *prev = NULL, *curr = *headptr;
     while (curr) {
         if (strcmp(curr->item->key, item->key) == 0) {                      // replace same key
             curr->item->value = item->value;
-            return NULL;
+            return false;
         }
         prev = curr;
         curr = curr->next;
@@ -44,7 +44,7 @@ Node *insert_node(Node **headptr, const Item *item)
     if (newnode == NULL) return false;
     if (prev == NULL) *headptr = newnode;
     else prev->next = newnode;
-    return newnode;
+    return true;
 }
 
 bool remove_node(Node **headptr, const keytype key)
@@ -62,21 +62,21 @@ bool remove_node(Node **headptr, const keytype key)
     return true;
 }
 
-void print_stack(const Node *node)
+void print_list(const Node *node)
 {
     if (node == NULL) {
         printf("---\n");
         return;
     }
     printf("(%s, %d)", node->item->key, node->item->value);
-    if (node->next) {
+    while (node->next) {
         node = node->next;
         printf(" -> (%s, %d)", node->item->key, node->item->value);
     }
     putchar('\n');
 }
 
-int delete_stack(Node *node)
+int delete_list(Node *node)
 {
     int node_counter = 0;
     Node *next;

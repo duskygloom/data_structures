@@ -1,4 +1,4 @@
-#include "linked_stack.h"
+#include "linked_list.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +8,7 @@ Node *create_node(const Item *item)
 {
     Node *node = malloc(sizeof(Node));
     node->item = create_item(item->key, item->value);
-    node->next = NULL;
+    node->nextbucket = NULL;
     return node;
 }
 
@@ -29,54 +29,36 @@ void print_node(const Node *node)
     else printf("(%s, %d)\n", node->item->key, node->item->value);
 }
 
-bool insert_node(Node **headptr, const Item *item)
-{
-    Node *prev = NULL, *curr = *headptr;
-    while (curr) {
-        if (strcmp(curr->item->key, item->key) == 0) {                      // replace same key
-            curr->item->value = item->value;
-            return false;
-        }
-        prev = curr;
-        curr = curr->next;
-    }
-    Node *newnode = create_node(item);
-    if (newnode == NULL) return false;
-    if (prev == NULL) *headptr = newnode;
-    else prev->next = newnode;
-    return true;
-}
-
 bool remove_node(Node **headptr, const keytype key)
 {
     Node *prev = NULL, *curr = *headptr;
     while (curr) {
         if (strcmp(curr->item->key, key) == 0) break;                       // found!
         prev = curr;
-        curr = curr->next;
+        curr = *(curr->nextbucket);
     }
     if (curr == NULL) return false;                                         // not found
-    if (prev) prev->next = curr->next;
+    if (prev) *(prev->nextbucket) = *(curr->nextbucket);
     else *headptr = curr->next;
     delete_node(curr);
     return true;
 }
 
-void print_stack(const Node *node)
+void print_list(const Node *node)
 {
     if (node == NULL) {
         printf("---\n");
         return;
     }
     printf("(%s, %d)", node->item->key, node->item->value);
-    while (node->next) {
+    if (node->next) {
         node = node->next;
         printf(" -> (%s, %d)", node->item->key, node->item->value);
     }
     putchar('\n');
 }
 
-int delete_stack(Node *node)
+int delete_list(Node *node)
 {
     int node_counter = 0;
     Node *next;

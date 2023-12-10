@@ -42,7 +42,7 @@ void print_hashtable(const HashTable *hashtable)
 {
     for (int i = 0; i < hashtable->maxsize; ++i) {
         printf("%d: ", i);
-        print_item(hashtable->nodes[i]);
+        print_node(hashtable->nodes[i]);
     }
 }
 
@@ -54,23 +54,50 @@ void print_hashtable(const HashTable *hashtable)
 bool hash_insert(HashTable *hashtable, const Item *item)
 {
     int hash = hashfunction(item->key) % hashtable->maxsize;
-    int index, offset = 0;
+    /**
+     * @note
+     * Find bucket of the last node.
+     * Bucket is the pointer to the node.
+     * Bucket is needed to make changes into the node
+     * and to find the hash using pointer arithmetic.
+    */
+    Node **bucket = hashtable->nodes + hash;
+    while (*bucket) {
+        if ((*bucket)->next == NULL) break;                             // found last node!
+        else if (strcmp((*bucket)->item->key, item->key) == 0) {        // replace same key
+            (*bucket)->item->value = item->value;
+            return true;
+        }
+        bucket = &((*bucket)->next);
+    }
+    // int offset = 0;
+    // int maxoffset = hashtable->maxsize - (bucket - hashtable->nodes);
+    // for (; offset < maxoffset; ++offset) {
+    //     if (*(bucket+offset) == NULL) break;                                // found!
+    //     else if (strcmp((*(bucket+offset))->item->key, item->key) == 0) {   // replace same key
+    //         (*(bucket+offset))->item->value = item->value;
+    //         return true;
+    //     }
+    // }
+    // find offset from last linked node to hash
+    int lastnode = bucket - hashtable->nodes, index, offset = 0;
     Node *curr;
-    // finds an empty bucket index
     for (; offset < hashtable->maxsize; ++offset) {
-        index = (hash + offset) % hashtable->maxsize;
+        index = (lastnode + offset) % hashtable->maxsize;
         curr = hashtable->nodes[index];
-        if (curr == NULL) break;
+        if (curr == NULL) break;                                        // found!
         else if (strcmp(curr->item->key, item->key) == 0) {             // replace same key
             curr->item->value = item->value;
             return true;
         }
     }
-    if (curr) return false;                                             // no empty bucket
-    // actual insertion
+    // insert at index
     Node *newnode = create_node(item);
     if (newnode == NULL) return false;
+    // *(bucket+offset) = newnode;
+    // if (bucket != bucket+offset) (*bucket)->next = newnode;
     hashtable->nodes[index] = newnode;
+    if (offset != 0) hashtable->nodes[lastnode]->next = newnode;
     ++(hashtable->length);
     return true;
 }
@@ -78,41 +105,22 @@ bool hash_insert(HashTable *hashtable, const Item *item)
 bool hash_delete(HashTable *hashtable, const keytype key)
 {
     int hash = hashfunction(key) % hashtable->maxsize;
-    int index, offset = 0;
-    Item *curr;
-    // finds index of the key
-    for (; offset < hashtable->maxsize; ++offset) {
-        index = (hash + offset) % hashtable->maxsize;
-        curr = hashtable->nodes[index];
-        /**
-         * @note
-         * Since this is linear probing, checking the entire table is
-         * not necessary. If one NULL is found, it means that the key
-         * does not exist.
-        */
-        if (curr == NULL) return false;
-        else if (strcmp(curr->key, key) == 0) break;                    // found!
+    if (remove_node(hashtable->nodes+hash, key)) {
+        --(hashtable->length);
+        return true;
     }
-    if (offset >= hashtable->maxsize) return false;                     // fully scanned
-    // actual deletion
-    delete_item(curr);
-    hashtable->nodes[index] = NULL;
-    --(hashtable->length);
-    return true;
+    return false;
 }
 
 Item *hash_search(const HashTable *hashtable, const keytype key)
 {
     int hash = hashfunction(key) % hashtable->maxsize;
-    int index, offset = 0;
-    Item *curr;
-    // finds index of the key
-    for (; offset < hashtable->maxsize; ++offset) {
-        index = (hash + offset) % hashtable->maxsize;
-        curr = hashtable->nodes[index];
-        if (curr == NULL) return false;                                 // not found
-        else if (strcmp(curr->key, key) == 0) break;                    // found!
+    Node *node = hashtable->nodes[hash];
+    if (node == NULL) return NULL;
+    while (node) {
+        if (strcmp(node->item->key, key) == 0)
+            return node->item;
+        node = node->next;
     }
-    if (offset >= hashtable->maxsize) return NULL;                      // fully scanned
-    return hashtable->nodes[index];
+    return NULL;
 }

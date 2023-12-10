@@ -2,7 +2,7 @@
 #define HASH_TABLE_H
 
 #include "table_item.h"
-#include "linked_stack.h"
+#include "linked_list.h"
 
 #include <stdbool.h>
 
@@ -11,7 +11,7 @@ int hashfunction(const keytype key);
 typedef struct HashTable {
     int maxsize;
     int length;
-    Node **stacks;
+    Node **lists;
 } HashTable;
 
 HashTable *create_hashtable(int maxsize);

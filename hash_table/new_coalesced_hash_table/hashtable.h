@@ -2,7 +2,7 @@
 #define HASH_TABLE_H
 
 #include "table_item.h"
-#include "linked_stack.h"
+#include "linked_list.h"
 
 #include <stdbool.h>
 
