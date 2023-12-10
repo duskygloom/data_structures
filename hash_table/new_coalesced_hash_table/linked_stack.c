@@ -29,13 +29,13 @@ void print_node(const Node *node)
     else printf("(%s, %d)\n", node->item->key, node->item->value);
 }
 
-bool insert_node(Node **headptr, const Item *item)
+Node *insert_node(Node **headptr, const Item *item)
 {
     Node *prev = NULL, *curr = *headptr;
     while (curr) {
         if (strcmp(curr->item->key, item->key) == 0) {                      // replace same key
             curr->item->value = item->value;
-            return false;
+            return NULL;
         }
         prev = curr;
         curr = curr->next;
@@ -44,7 +44,7 @@ bool insert_node(Node **headptr, const Item *item)
     if (newnode == NULL) return false;
     if (prev == NULL) *headptr = newnode;
     else prev->next = newnode;
-    return true;
+    return newnode;
 }
 
 bool remove_node(Node **headptr, const keytype key)
@@ -69,7 +69,7 @@ void print_stack(const Node *node)
         return;
     }
     printf("(%s, %d)", node->item->key, node->item->value);
-    while (node->next) {
+    if (node->next) {
         node = node->next;
         printf(" -> (%s, %d)", node->item->key, node->item->value);
     }

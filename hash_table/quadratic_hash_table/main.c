@@ -1,57 +1,42 @@
-#include "hash_table.h"
+#include "hashtable.h"
 
-int get_string(char *buffer, int length);
+#include <stdio.h>
+#include <stdlib.h>
+
+#define HASH_TABLE_SIZE 11
+#define NUM_ITEMS       7
 
 int main()
 {
-    Movie *movielist[NUM_MOVIES];
-
-    // filling movie list from file
-    FILE *moviefile = fopen(MOVIE_FILE, "r");
-    skip_until(moviefile, '\n');                            // skip first line
-    for (int i = 0; i < NUM_MOVIES; ++i) {
-        movielist[i] = get_movie_from_file(moviefile);
-        // print_movie(movie_list[i]);
-    }
-    fclose(moviefile);
-
-    // creating hash table from movie list
-    HashTable *hashtable = create_hash_table();
-    for (int i = 0; i < NUM_MOVIES; ++i) {
-        if (!hash_insert(hashtable, movielist[i])) {
-            printf("Could not insert: ");
-            print_movie(movielist[i]);
-        }
-    }
-    #ifdef DEBUG_MODE
-    check_collision(true);
+    HashTable *hashtable = create_hashtable(HASH_TABLE_SIZE);
     putchar('\n');
-    hash_print(hashtable);
+    print_hashtable(hashtable);
+    Item **items = calloc(NUM_ITEMS, sizeof(Item *));
+    items[0] = create_item("const", 5);
+    items[1] = create_item("sizeof", 6);
+    items[2] = create_item("for", 3);
+    items[3] = create_item("while", 5);
+    items[4] = create_item("if", 2);
+    items[5] = create_item("return", 6);
+    items[6] = create_item("typedef", 7);
+    for (int i = 0; i < NUM_ITEMS; ++i) {
+        hash_insert(hashtable, items[i]);
+        delete_item(items[i]);
+    }
+    free(items);
     putchar('\n');
-    #endif
-
-    // searching movie
-    printf("Movie name: ");
-    char moviename[MOVIE_NAME_LENGTH+1];
-    get_string(moviename, MOVIE_NAME_LENGTH);
-    Movie *result = hash_search(hashtable, moviename);
-    printf("%s: %d\n", moviename, hash_function(moviename));
-    if (result) print_movie(result);
-    else printf("Could not find: %s\n", moviename);
-
-    // freeing memory
-    delete_hash_table(hashtable);
-    for (int i = 0; i < NUM_MOVIES; ++i)
-        delete_movie(movielist[i]);
-
+    print_hashtable(hashtable);
+    print_item(hash_search(hashtable, "break"));
+    print_item(hash_search(hashtable, "const"));
+    print_item(hash_search(hashtable, "return"));
+    hash_delete(hashtable, "break");
+    hash_delete(hashtable, "const");
+    hash_delete(hashtable, "return");
+    putchar('\n');
+    print_hashtable(hashtable);
+    print_item(hash_search(hashtable, "break"));
+    print_item(hash_search(hashtable, "const"));
+    print_item(hash_search(hashtable, "return"));
+    delete_hashtable(hashtable);
     return 0;
-}
-
-int get_string(char *buffer, int length)
-{
-    int ch, counter = 0;
-    while ((ch = getchar()) != '\n' && counter < length)
-        buffer[counter++] = ch;
-    buffer[counter] = '\0';
-    return counter;
 }

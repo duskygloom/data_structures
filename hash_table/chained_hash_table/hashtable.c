@@ -17,24 +17,24 @@ HashTable *create_hashtable(int maxsize)
     HashTable *hashtable = malloc(sizeof(HashTable));
     hashtable->maxsize = maxsize;
     hashtable->length = 0;
-    hashtable->nodes = calloc(maxsize, sizeof(Node *));
+    hashtable->stacks = calloc(maxsize, sizeof(Node *));
     return hashtable;
 }
 
 void delete_hashtable(HashTable *hashtable)
 {
     if (hashtable == NULL) return;
-    if (hashtable->nodes == NULL) {
+    if (hashtable->stacks == NULL) {
         free(hashtable);
         return;
     }
     for (int i = 0; i < hashtable->maxsize; ++i)
-        if (hashtable->nodes[i]) {
-            delete_stack(hashtable->nodes[i]);
-            hashtable->nodes[i] = NULL;
-            --(hashtable->length);
+        if (hashtable->stacks[i]) {
+            int node_counter = delete_stack(hashtable->stacks[i]);
+            hashtable->stacks[i] = NULL;
+            hashtable->length -= node_counter;
         }
-    free(hashtable->nodes);
+    free(hashtable->stacks);
     free(hashtable);
 }
 
@@ -42,53 +42,28 @@ void print_hashtable(const HashTable *hashtable)
 {
     for (int i = 0; i < hashtable->maxsize; ++i) {
         printf("%d: ", i);
-        print_stack(hashtable->nodes[i]);
+        print_stack(hashtable->stacks[i]);
     }
 }
 
-/**
- * @note
- * Copies item to hashtable so it is
- * fine to free the original item.
-*/
 bool hash_insert(HashTable *hashtable, const Item *item)
 {
     int hash = hashfunction(item->key) % hashtable->maxsize;
-    Node *node = hashtable->nodes[hash];
-    if (node == NULL) {
-        hashtable->nodes[hash] = create_node(item);
-        if (hashtable->nodes[hash]) {
-            ++(hashtable->length);
-            return true;
-        }
-        return false;
+    Node *node = hashtable->stacks[hash];
+    if (insert_node(hashtable->stacks+hash, item)) {
+        ++(hashtable->length);
+        return true;
     }
-    while (node->next) {
-        if (strcmp(node->item->key, item->key) == 0) {
-            node->item->value = item->value;
-            return true;
-        }
-        node = node->next;
-    }
-    node->next = create_node(item);
-    if (node->next) return true;
     return false;
 }
 
 bool hash_delete(HashTable *hashtable, const keytype key)
 {
     int hash = hashfunction(key) % hashtable->maxsize;
-    Node *node = hashtable->nodes[hash], *prev = NULL;
-    if (node == NULL) return false;
-    while (node) {
-        if (strcmp(node->item->key, key) == 0) {
-            if (prev) prev->next = node->next;
-            else hashtable->nodes[hash] = node->next;
-            free(node);
-            return true;
-        }
-        prev = node;
-        node = node->next;
+    Node *node = hashtable->stacks[hash], *prev = NULL;
+    if (remove_node(hashtable->stacks+hash, key)) {
+        --(hashtable->length);
+        return true;
     }
     return false;
 }
@@ -96,7 +71,7 @@ bool hash_delete(HashTable *hashtable, const keytype key)
 Item *hash_search(const HashTable *hashtable, const keytype key)
 {
     int hash = hashfunction(key) % hashtable->maxsize;
-    Node *node = hashtable->nodes[hash];
+    Node *node = hashtable->stacks[hash];
     if (node == NULL) return NULL;
     while (node) {
         if (strcmp(node->item->key, key) == 0)

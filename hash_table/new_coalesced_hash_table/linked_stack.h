@@ -16,11 +16,11 @@ void print_node(const Node *node);
 
 /**
  * @return
- * Returns true if any new node has been pushed.
- * Returns false when no new node has been pushed,
- * includes malloc failure and replacing same key.
+ * Returns pointer to the inserted node.
+ * Returns NULL if no new node has been inserted,
+ * it includes value overwrite and malloc failures.
 */
-bool insert_node(Node **headptr, const Item *item);
+Node *insert_node(Node **headptr, const Item *item);
 bool remove_node(Node **headptr, const keytype key);
 
 void print_stack(const Node *node);
