@@ -7,13 +7,14 @@
 
 typedef struct Node {
     Item *item;
-    struct Node **nextbucket;
+    struct Node *next;
 } Node;
 
 Node *create_node(const Item *item);
 void delete_node(Node *node);
 void print_node(const Node *node);
 
+Node *insert_node(Node **headptr, const Item *item);
 bool remove_node(Node **headptr, const keytype key);
 
 void print_list(const Node *node);

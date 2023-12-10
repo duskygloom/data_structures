@@ -8,7 +8,7 @@ Node *create_node(const Item *item)
 {
     Node *node = malloc(sizeof(Node));
     node->item = create_item(item->key, item->value);
-    node->nextbucket = NULL;
+    node->next = NULL;
     return node;
 }
 
@@ -29,16 +29,34 @@ void print_node(const Node *node)
     else printf("(%s, %d)\n", node->item->key, node->item->value);
 }
 
+Node *insert_node(Node **headptr, const Item *item)
+{
+    Node *prev = NULL, *curr = *headptr;
+    while (curr) {
+        if (strcmp(curr->item->key, item->key) == 0) {                      // replace same key
+            curr->item->value = item->value;
+            return NULL;
+        }
+        prev = curr;
+        curr = curr->next;
+    }
+    Node *newnode = create_node(item);
+    if (newnode == NULL) return NULL;
+    if (prev == NULL) *headptr = newnode;
+    else prev->next = newnode;
+    return newnode;
+}
+
 bool remove_node(Node **headptr, const keytype key)
 {
     Node *prev = NULL, *curr = *headptr;
     while (curr) {
         if (strcmp(curr->item->key, key) == 0) break;                       // found!
         prev = curr;
-        curr = *(curr->nextbucket);
+        curr = curr->next;
     }
     if (curr == NULL) return false;                                         // not found
-    if (prev) *(prev->nextbucket) = *(curr->nextbucket);
+    if (prev) prev->next = curr->next;
     else *headptr = curr->next;
     delete_node(curr);
     return true;

@@ -54,51 +54,23 @@ void print_hashtable(const HashTable *hashtable)
 bool hash_insert(HashTable *hashtable, const Item *item)
 {
     int hash = hashfunction(item->key) % hashtable->maxsize;
-    /**
-     * @note
-     * Find bucket of the last node.
-     * Bucket is the pointer to the node.
-     * Bucket is needed to make changes into the node
-     * and to find the hash using pointer arithmetic.
-    */
-    Node **bucket = hashtable->nodes + hash;
-    while (*bucket) {
-        if ((*bucket)->next == NULL) break;                             // found last node!
-        else if (strcmp((*bucket)->item->key, item->key) == 0) {        // replace same key
-            (*bucket)->item->value = item->value;
-            return true;
-        }
-        bucket = &((*bucket)->next);
-    }
-    // int offset = 0;
-    // int maxoffset = hashtable->maxsize - (bucket - hashtable->nodes);
-    // for (; offset < maxoffset; ++offset) {
-    //     if (*(bucket+offset) == NULL) break;                                // found!
-    //     else if (strcmp((*(bucket+offset))->item->key, item->key) == 0) {   // replace same key
-    //         (*(bucket+offset))->item->value = item->value;
-    //         return true;
-    //     }
-    // }
-    // find offset from last linked node to hash
-    int lastnode = bucket - hashtable->nodes, index, offset = 0;
+    // find empty spot
+    int index, offset = 0;
     Node *curr;
+    // finds an empty bucket index
     for (; offset < hashtable->maxsize; ++offset) {
-        index = (lastnode + offset) % hashtable->maxsize;
+        index = (hash + offset) % hashtable->maxsize;
         curr = hashtable->nodes[index];
-        if (curr == NULL) break;                                        // found!
+        if (curr == NULL) break;
         else if (strcmp(curr->item->key, item->key) == 0) {             // replace same key
             curr->item->value = item->value;
             return true;
         }
     }
-    // insert at index
-    Node *newnode = create_node(item);
+    if (curr) return false;                                             // no empty bucket
+    Node *newnode = insert_node(hashtable->nodes+hash, item);
     if (newnode == NULL) return false;
-    // *(bucket+offset) = newnode;
-    // if (bucket != bucket+offset) (*bucket)->next = newnode;
     hashtable->nodes[index] = newnode;
-    if (offset != 0) hashtable->nodes[lastnode]->next = newnode;
-    ++(hashtable->length);
     return true;
 }
 
