@@ -7,52 +7,25 @@ int lcm(int a, int b, int multiple) {
     return lcm(a, b, multiple+a);
 }
 
-int lcm_recursive(
-    int *array, 
-    int start1, int length1,
-    int start2, int length2
-) {
-    if (length1 == 1 && length2 == 1) {
-        // printf("lcm of array[%d] and array[%d].\n", start1, start2);
-        return lcm(array[start1], array[start2], array[start1]);
-    }
-    
-    else if (length1 == 1) {
-        // printf(
-        //     "lcm of array[%d] and lcm of array(%d, %d) and array(%d, %d).\n", 
-        //     start1, start2, length2/2, start2+length2/2, length2-length2/2
-        // );
-        return lcm(array[start1], 
-            lcm_recursive(array, 
-            start2, length2/2, start2+length2/2, length2-length2/2),
-            array[start1]
-        );
-    }
-
-    else if (length2 == 1) {
-        // printf(
-        //     "lcm of array(%d, %d) and array(%d, %d) and lcm of array[%d].\n", 
-        //     start1, length1/2, start1+length1/2, length1-length1/2, start2
-        // );
-        return lcm(array[start2],
-            lcm_recursive(array, 
-            start1, length1/2, start1+length1/2, length1-length1/2), 
-            array[start2]
-        );
-    }
-
-    else {
-        // printf(
-        //     "lcm of array(%d, %d) and array(%d, %d) and lcm of array(%d, %d) and array(%d, %d).\n", 
-        //     start1, length1/2, start1+length1/2, length1-length1/2, start2, length2/2, start2+length2/2, length2-length2/2
-        // );
-        int lcm_value = lcm_recursive(array, start1, length1/2, start1+length1/2, length1-length1/2);
-        return lcm(
-            lcm_value,
-            lcm_recursive(array, start2, length2/2, start2+length2/2, length2-length2/2),
-            lcm_value
-        );
-    }
+/**
+ * @param a
+ * Initialized by array[0].
+ * @param b
+ * Initialized by array[1].
+ * @param k
+ * Initialized by 1.
+ * a % kb == 0 is checked.
+ * @param index
+ * Initialized by 2.
+ * Because array[0] and array[1] are already passed in GCD.
+ * @param length
+ * Length will be length of array.
+*/
+int lcm_multiple(int a, int b, int k, int *array, int index, int length) {
+    int r = a % (k*b);
+	if (r == 0 && index+1 < length) return lcm_multiple(b, array[index+1], 1, array, index+1, length);
+	else if (r == 0) return (b);
+    return lcm_multiple(a, b, k+1, array, index, length);
 }
 
 int main()
@@ -63,6 +36,6 @@ int main()
     numbers = calloc(length, sizeof(int));
     printf("Numbers: ");
     for (int i = 0; i < length; ++i) scanf("%d", &numbers[i]);
-    printf("Final lcm = %d\n", lcm_recursive(numbers, 0, length/2, length/2, length-length/2));
+    printf("Final lcm = %d\n", lcm_multiple(numbers[0], numbers[1], 1, numbers, 2, length));
     return 0;
 }
