@@ -15,5 +15,8 @@ main: $(BUILD)/main.o $(OBJECTS)
 $(BUILD)/%.o: %.c
 	$(CC) $^ -o $@ -c $(ARGS)
 
+init:
+	mkdir $(BUILD)
+
 clean:
 	rm $(BUILD)/*.o
