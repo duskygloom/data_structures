@@ -2,11 +2,17 @@
 
 #include <stdio.h>
 
-#define MAXSTACKLEN 20
-#define NUMSTACKS   4
+// #define MAXSTACKLEN 20
+// #define NUMSTACKS   4
 
 int main()
 {
+    int NUMSTACKS, MAXSTACKLEN;
+    printf("\nNumber of stacks: ");
+    scanf("%d", &NUMSTACKS);
+    printf("Length of array: ");
+    scanf("%d", &MAXSTACKLEN);
+
     // creating multistack
     MultiStack *multistack = create_multistack(NUMSTACKS, MAXSTACKLEN);
     int stack, value;

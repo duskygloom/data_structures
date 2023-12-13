@@ -136,12 +136,12 @@ int pop(MultiStack *multistack, int stack)
     int length = multistack->info[stack]->length;
     int empty_slots = get_empty_slots(multistack);
     // shifting chunks of int towards left
-    int *source = multistack->array + (top + length);
+    int *source = multistack->array + (top + length - 1);
     int range = multistack->maxsize - top - length - empty_slots;
     int popped = *source;
     memmove(source-1, source, range*sizeof(int));
     // making changes to the info of stacks
-    for (int i = stack+1; i < multistack->nstacks; ++i)
+    for (int i = stack; i >= 0; --i)
         --(multistack->info[i]->top);
     --(multistack->info[stack]->length);
     return popped;
