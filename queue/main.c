@@ -20,6 +20,14 @@ int main()
     print_queue(queue);
     enqueue(queue, 70);
     print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
+    print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
+    print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
+    print_queue(queue);
+    printf("Popped: %d\n", dequeue(queue));
+    print_queue(queue);
     delete_queue(queue);
     return 0;
 }

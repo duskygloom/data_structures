@@ -1,7 +1,7 @@
 CC		= gcc
 ARGS	= -g -Wall
 BUILD	= build
-OBJECTS	= $(BUILD)/hashtable.o $(BUILD)/table_item.o
+OBJECTS	= $(BUILD)/hashtable.o $(BUILD)/table_item.o $(BUILD)/linked_list.o
 BINARY	= a.exe
 
 all: main

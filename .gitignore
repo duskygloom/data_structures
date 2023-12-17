@@ -5,11 +5,9 @@
 *.exe
 *.out
 *.o
-build/
 
 # test
 test.*
 
 # drawio backup
 *.drawio.bkp
-

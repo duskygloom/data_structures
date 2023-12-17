@@ -1,55 +1,42 @@
-#include "hash_table.h"
+#include "hashtable.h"
 
-int get_string(char *buffer, int length);
+#include <stdio.h>
+#include <stdlib.h>
+
+#define HASH_TABLE_SIZE 11
+#define NUM_ITEMS       7
 
 int main()
 {
-    Movie *movie_list[NUM_MOVIES];
-
-    // filling movie list from file
-    FILE *moviefile = fopen(MOVIE_FILE, "r");
-    skip_until(moviefile, '\n');                            // skip first line
-    for (int i = 0; i < NUM_MOVIES; ++i) {
-        movie_list[i] = get_movie_from_file(moviefile);
-        // print_movie(movie_list[i]);
-    }
-    fclose(moviefile);
-
-    // creating hash table from movie list
-    HashTable *hash_table = create_hash_table();
-    for (int i = 0; i < NUM_MOVIES; ++i) {
-        if (!hash_insert(hash_table, movie_list[i])) {
-            printf("Could not insert: ");
-            print_movie(movie_list[i]);
-        }
-    }
-    check_collision(true);
+    HashTable *hashtable = create_hashtable(HASH_TABLE_SIZE);
     putchar('\n');
-    // hash_print(hash_table);
-    // putchar('\n');
-
-    // searching movie
-    printf("Movie name: ");
-    char movie_name[MOVIE_NAME_LENGTH+1];
-    get_string(movie_name, MOVIE_NAME_LENGTH);
-    int result = hash_search(hash_table, movie_name);
-    printf("%s: %d(%d)\n", movie_name, result, hash_function(movie_name));
-    if (result == -1) printf("Could not find: %s\n", movie_name);
-    else print_movie(hash_table->array[result]);
-
-    // freeing memory
-    free(hash_table);
-    for (int i = 0; i < NUM_MOVIES; ++i)
-        delete_movie(movie_list[i]);
-
+    print_hashtable(hashtable);
+    Item **items = calloc(NUM_ITEMS, sizeof(Item *));
+    items[0] = create_item("const", 5);
+    items[1] = create_item("sizeof", 6);
+    items[2] = create_item("for", 3);
+    items[3] = create_item("while", 5);
+    items[4] = create_item("if", 2);
+    items[5] = create_item("return", 6);
+    items[6] = create_item("typedef", 7);
+    for (int i = 0; i < NUM_ITEMS; ++i) {
+        hash_insert(hashtable, items[i]);
+        delete_item(items[i]);
+    }
+    free(items);
+    putchar('\n');
+    print_hashtable(hashtable);
+    print_item(hash_search(hashtable, "break"));
+    print_item(hash_search(hashtable, "const"));
+    print_item(hash_search(hashtable, "return"));
+    hash_delete(hashtable, "break");
+    hash_delete(hashtable, "const");
+    hash_delete(hashtable, "return");
+    putchar('\n');
+    print_hashtable(hashtable);
+    print_item(hash_search(hashtable, "break"));
+    print_item(hash_search(hashtable, "const"));
+    print_item(hash_search(hashtable, "return"));
+    delete_hashtable(hashtable);
     return 0;
-}
-
-int get_string(char *buffer, int length)
-{
-    int ch, counter = 0;
-    while ((ch = getchar()) != '\n' && counter < length)
-        buffer[counter++] = ch;
-    buffer[counter] = '\0';
-    return counter;
 }

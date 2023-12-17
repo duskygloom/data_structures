@@ -15,8 +15,10 @@ Movie *create_movie(char *name, int year);
 
 static inline void delete_movie(Movie *movie)
 {
-    free(movie->name);
-    free(movie);
+    if (movie) {
+        if (movie->name) free(movie->name);
+        free(movie);
+    }
 }
 
 static inline void print_movie(Movie *movie)

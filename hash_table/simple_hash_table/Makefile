@@ -1,6 +1,6 @@
 CC		= gcc
 BUILD	= build
-OBJECTS	= $(BUILD)/hashtable.o $(BUILD)/linked_list.o $(BUILD)/table_item.o
+OBJECTS	= $(BUILD)/hashtable.o
 BINARY	= a.exe
 
 all: main

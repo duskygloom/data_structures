@@ -30,8 +30,8 @@ int main()
     print_item(hash_search(hashtable, "const"));
     print_item(hash_search(hashtable, "return"));
     hash_delete(hashtable, "break");
-    hash_delete(hashtable, "const");
-    hash_delete(hashtable, "return");
+    hash_delete(hashtable, "sizeof");
+    // hash_delete(hashtable, "return");
     putchar('\n');
     print_hashtable(hashtable);
     print_item(hash_search(hashtable, "break"));
