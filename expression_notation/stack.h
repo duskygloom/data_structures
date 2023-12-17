@@ -6,41 +6,32 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-/**
- * @note
- * Define the three statements below to change the
- * type of the stack elements.
-*/
-typedef String * type;
-#define TYPE_NULL_VALUE NULL
-
-static inline void print_type(type value)
-{
-    print_string(value);
-}
-
 typedef struct Stack {
     int maxsize;
     int top;
-    type *array;
+    String **array;
 } Stack;
 
 Stack *create_stack(int maxsize);
 void delete_stack(Stack *stack);
 
-void push(Stack *stack, type value);
-type pop(Stack *stack);
+void push(Stack *stack, String *value);
+String *pop(Stack *stack);
 
-static inline type peek(Stack *stack)
+static inline String *peek(const Stack *stack)
 {
-    return stack->array[stack->top];
+    if (stack->top <= 0) {
+        printf("Stack underflow.\n");
+        return NULL;
+    }
+    return stack->array[stack->top-1];
 }
 
-static inline bool is_empty_stack(Stack *stack)
+static inline bool is_empty_stack(const Stack *stack)
 {
-    return stack->top < 0;
+    return stack->top <= 0;
 }
 
-void print_stack(Stack *stack);
+void print_stack(const Stack *stack);
 
 #endif

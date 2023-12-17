@@ -7,7 +7,8 @@
  * @note
  * The maximum number of tokens in an expression.
 */
-#define MAX_TOKENS 100
+#define MAX_TOKENS      100
+#define MAX_TOKEN_LEN   10
 
 /**
  * @note
@@ -20,10 +21,12 @@ typedef enum PRIORITY {
     HIGH_PRIORITY
 } Priority;
 
-Priority get_priority(String *operator);
+Priority get_priority(const String *operator);
 
-Stack *get_expression();
+Stack *read_expression();
 
-Stack *get_postfix_from_infix(Stack *infix);
+Stack *get_postfix(const Stack *infix);
+
+int solve_postfix(const Stack *postfix);
 
 #endif

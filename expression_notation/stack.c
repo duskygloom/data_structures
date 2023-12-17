@@ -2,19 +2,14 @@
 
 #include <stdlib.h>
 
-// #define DEBUG_MODE
-
 Stack *create_stack(int maxsize)
 {
     Stack *stack = malloc(sizeof(Stack));
     if (stack) {
         stack->maxsize  = maxsize;
-        stack->top      = -1;
-        stack->array    = calloc(maxsize, sizeof(type));
+        stack->top      = 0;
+        stack->array    = calloc(maxsize, sizeof(String *));
     }
-    #ifdef DEBUG_MODE
-    printf("Created stack: %p(%d)\n", stack, maxsize);
-    #endif
     return stack;
 }
 
@@ -26,29 +21,21 @@ Stack *create_stack(int maxsize)
 void delete_stack(Stack *stack)
 {
     if (stack->array) free(stack->array);
-    #ifdef DEBUG_MODE
-    printf("Deleted stack: %p(%d)\n", stack, stack->maxsize);
-    #endif
     free(stack);
 }
 
-void push(Stack *stack, type value)
+void push(Stack *stack, String *value)
 {
-    if (stack->top >= stack->maxsize-1) {
+    if (stack->top >= stack->maxsize) {
         printf("Stack overflow.\n");
         return;
     }
-    stack->array[++stack->top] = value;
-    #ifdef DEBUG_MODE
-    printf("Pushing into stack: ");
-    print_type(type);
-    printf("->%d\n", stack->top);
-    #endif
+    stack->array[(stack->top)++] = value;
 }
 
 /**
  * @return
- * Returns the value popped or -1 if there is an 
+ * Returns the value popped or 0 if there is an 
  * underflow.
  * @note
  * The element still remains in the array even after
@@ -59,28 +46,23 @@ void push(Stack *stack, type value)
  * It will also not be shown while printing...
  * So it is basically deleting...?
 */
-type pop(Stack *stack)
+String *pop(Stack *stack)
 {
-    if (stack->top < 0) {
+    if (stack->top <= 0) {
         printf("Stack underflow.\n");
-        return TYPE_NULL_VALUE;
+        return NULL;
     }
-    #ifdef DEBUG_MODE
-    printf("Popping from stack: ");
-    print_type(stack->array[stack->top]);
-    printf("->%d\n", stack->top);
-    #endif
-    return stack->array[stack->top--];
+    return stack->array[--(stack->top)];
 }
 
-void print_stack(Stack *stack)
+void print_stack(const Stack *stack)
 {
     printf("[");
-    if (stack->top >= 0)
-        print_type(stack->array[0]);
-    for (int i = 1; i <= stack->top; ++i) {
+    if (stack->top > 0)
+        print_string(stack->array[0]);
+    for (int i = 1; i < stack->top; ++i) {
         printf(", ");
-        print_type(stack->array[i]);
+        print_string(stack->array[i]);
     }
     printf("]\n");
 }

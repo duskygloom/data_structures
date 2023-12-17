@@ -2,15 +2,18 @@
 #include "expressions.h"
 
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 
-bool same_string(char *str1, char *str2)
+bool samestr(const String *str, const char *cstr)
 {
-    for (; *str1 && *str2 && *str1 == *str2; ++str1 && ++str2);
-    return *str1 == 0 && *str2 == 0;
+    char *str1 = str->cstring;
+    for (; *str1 && *cstr && *str1 == *cstr; ++str1 && ++cstr);
+    return *str1 == 0 && *cstr == 0;
 }
 
-Priority get_priority(String *operator)
+Priority get_priority(const String *operator)
 {
     if (operator->length != 1)
         return NO_PRIORITY;
@@ -35,7 +38,7 @@ static inline bool is_operator(int ch)
     return ch == '^' || ch == '*' || ch == '/' || ch == '%' || ch == '+' || ch == '-';
 }
 
-Stack *get_expression()
+Stack *read_expression()
 {
     char *operators[] = {"+", "-", "*", "/", "%%", "^"};
     Stack *expression = create_stack(MAX_TOKENS);
@@ -68,41 +71,98 @@ Stack *get_expression()
     return expression;
 }
 
-Stack *get_postfix_from_infix(Stack *infix)
+/**
+ * @note
+ * An operator will be pushed to opstack if opstack is empty
+ * or if there is a opening bracket at top of opstack
+ * or if the priority of operator is higher than the top.
+*/
+static inline bool to_opstack(const Stack *opstack, Priority p)
+{
+    return is_empty_stack(opstack) || samestr(peek(opstack), "(") || p > get_priority(peek(opstack));
+}
+
+Stack *get_postfix(const Stack *infix)
 {
     String **array = infix->array;
-    int length = infix->maxsize;
+    int length = infix->top;
     Stack *postfix  = create_stack(length);
-    Stack *op_stack = create_stack(length);
+    Stack *opstack = create_stack(length);
     for (int i = 0; i < length && array[i]; ++i) {
         Priority p = get_priority(array[i]);
-        // if opening bracket, simply push to op_stack
-        if (same_string(array[i]->cstring, "("))
-            push(op_stack, array[i]);
-        // if closing bracket, evaluate till the opening bracket
-        else if (same_string(array[i]->cstring, ")")) {
-            String *top = pop(op_stack);
-            while (!same_string(top->cstring, "(")) {
+        if (samestr(array[i], "("))
+            push(opstack, array[i]);
+        else if (samestr(array[i], ")")) {
+            String *top = pop(opstack);
+            while (!samestr(top, "(")) {
                 push(postfix, top);
-                top = pop(op_stack);
+                top = pop(opstack);
             }
         }
-        // if it is an operand
         else if (p == NO_PRIORITY)
             push(postfix, array[i]);
-        // if it is a less prior operator
-        else if (is_empty_stack(op_stack) 
-                    || same_string(peek(op_stack)->cstring, "(") 
-                    || p <= get_priority(peek(op_stack))) {
-            while (p < get_priority(peek(op_stack)))
-                push(postfix, pop(op_stack));
-            push(op_stack, array[i]);
-        }
+        else if (to_opstack(opstack, p))
+            push(opstack, array[i]);
         // same or more prior operator
-        else push(op_stack, array[i]);
+        else {
+            while (!to_opstack(opstack, p)) push(postfix, pop(opstack));
+            push(opstack, array[i]);
+        }
     }
-    while (!is_empty_stack(op_stack))
-        push(postfix, pop(op_stack));
-    delete_stack(op_stack);
+    while (!is_empty_stack(opstack))
+        push(postfix, pop(opstack));
+    delete_stack(opstack);
     return postfix;
+}
+
+int power(int base, int exp)
+{
+    int result = 1;
+    for (int i = 0; i < exp; ++i) result *= base;
+    return result;
+}
+
+int solve_postfix(const Stack *postfix)
+{
+    int result = 0;
+    char buffer[MAX_TOKEN_LEN+1];
+    int length = postfix->top;
+    Stack *opstack = create_stack(length);
+    for (int i = 0; i < length; ++i) {
+        if (get_priority(postfix->array[i]) == NO_PRIORITY)
+            push(opstack, postfix->array[i]);
+        else {
+            int operator = postfix->array[i]->cstring[0];
+            int operand1 = atoi(pop(opstack)->cstring);
+            int operand2 = atoi(pop(opstack)->cstring);
+            switch (operator) {
+                case '+':
+                    result = operand2 + operand1;
+                    break;
+                case '-':
+                    result = operand2 - operand1;
+                    break;
+                case '*':
+                    result = operand2 * operand1;
+                    break;
+                case '/':
+                    result = operand2 / operand1;
+                    break;
+                case '%':
+                    result = operand2 % operand1;
+                    break;
+                case '^':
+                    result = power(operand2, operand1);
+                    break;
+                default:
+                    printf("[Error] Invalid operator: %c\n", operator);
+                    result = 0;
+                    break;
+            }
+            sprintf(buffer, "%*d", MAX_TOKEN_LEN, result);
+            push(opstack, create_string(buffer));
+        }
+    }
+    delete_stack(opstack);
+    return result;
 }
