@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int bsd_checksum(int key) {
+int folding_method(int key) {
     const int m = 29;
     int hash = 0;
     while (key > 0) {
@@ -15,6 +15,6 @@ int main()
     int key;
     printf("Key : ");
     scanf("%d", &key);
-    printf("Hash: %d\n", bsd_checksum(key));
+    printf("Hash: %d\n", folding_method(key));
     return 0;
 }
