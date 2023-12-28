@@ -1,0 +1,111 @@
+gcc ./main.c && ./a.out 
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 2
+1. Insert at start.
+2. Insert at end.
+3. Insert at any position.
+Response: 1
+Value: 12
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 2
+1. Insert at start.
+2. Insert at end.
+3. Insert at any position.
+Response: 2
+Value: 25
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 2
+1. Insert at start.
+2. Insert at end.
+3. Insert at any position.
+Response: 3
+Index, value: 1 0
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 1
+1. Print list.
+2. Count nodes.
+Response: 1
+List: [12, 0, 25 -> 12]
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 3
+1. Delete from start.
+2. Delete from end.
+3. Delete from any position.
+Response: 2
+Popped value: 25
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 1
+1. Print list.
+2. Count nodes.
+Response: 1
+List: [12, 0 -> 12]
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 4
+1. Sort ascending.
+2. Sort descending.
+Response: 1
+Ascending list: [0, 12 -> 0]
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 1
+1. Print list.
+2. Count nodes.
+Response: 1
+List: [0, 12 -> 0]
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 1
+1. Print list.
+2. Count nodes.
+Response: 2
+Length: 2
+
+1. Traversal.
+2. Insertion.
+3. Deletion.
+4. Sorting.
+0. Delete the list and exit.
+Response: 0

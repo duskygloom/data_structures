@@ -73,13 +73,11 @@ int main()
                         ascending_sort(list);
                         printf("Ascending list: ");
                         print_list(list);
-                        putchar('\n');
                         break;
                     case 2:
                         descending_sort(list);
                         printf("Descending list: ");
                         print_list(list);
-                        putchar('\n');
                         break;
                 }
                 break;

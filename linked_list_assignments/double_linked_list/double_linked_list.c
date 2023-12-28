@@ -30,18 +30,26 @@ void delete_list(Node *list) {
 
 void print_list(Node *list) {
     Node *curr = list;
-    printf("Forward:");
-    while (curr->next) {
-        printf(" %d", curr->next->value);
+    printf("Forward: [");
+    if (curr->next) {
+        printf("%d", curr->next->value);
         curr = curr->next;
     }
-    putchar('\n');
-    printf("Backward:");
-    while (curr->prev) {
-        printf(" %d", curr->value);
+    while (curr->next) {
+        printf(", %d", curr->next->value);
+        curr = curr->next;
+    }
+    printf("]\n");
+    printf("Backward: [");
+    if (curr->prev) {
+        printf("%d", curr->value);
         curr = curr->prev;
     }
-    putchar('\n');
+    while (curr->prev) {
+        printf(", %d", curr->value);
+        curr = curr->prev;
+    }
+    printf("]\n");
 }
 
 int count_list(Node *list) {
@@ -118,7 +126,7 @@ int pop_right(Node *list) {
 
 int delete(Node *list, int index) {
     int value = 0;
-    ++index;        // because starting from list and not head
+    ++index;                                                // because starting from list and not head
     Node *curr = list;
     while (curr->next && index > 0) {
         curr = curr->next;
@@ -127,9 +135,9 @@ int delete(Node *list, int index) {
     if (curr->prev && index == 0) {
         value = curr->value;
         Node *next = curr->next;
-        free(curr);
         curr->prev->next = next;
         if (next) next->prev = curr->prev;
+        free(curr);
     }
     return value;
 }

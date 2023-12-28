@@ -1,8 +1,9 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Node {
     int value;
+    struct Node *prev;
     struct Node *next;
 } Node;
 
@@ -11,6 +12,7 @@ typedef struct Node {
 Node *create_list() {
     Node *list = malloc(sizeof(Node));
     list->value = 0;
+    list->prev = NULL;
     list->next = NULL;
     return list;
 }
@@ -34,18 +36,31 @@ void delete_list(Node *list) {
 // traversal
 
 void print_list(Node *list) {
-    putchar('[');
     Node *head = list->next;
-    Node *curr = list->next;
-    if (curr) {
-        printf("%d", curr->value);
-        curr = curr->next;
+    if (!head) {
+        printf("Forward: []\nBackward: []\n");
+        return;
     }
+    Node *curr = head;
+    printf("Forward: [");
+    printf("%d", curr->value);
+    curr = curr->next;
     while (curr && curr != head) {
         printf(", %d", curr->value);
         curr = curr->next;
     }
-    if (curr) printf(" -> %d", curr->value);
+    printf(" -> %d", curr->value);
+    printf("]\n");
+    printf("Backward: [");
+    Node *tail = curr->prev;
+    curr = tail;
+    printf("%d", curr->value);
+    curr = curr->prev;
+    while (curr && curr != tail) {
+        printf(", %d", curr->value);
+        curr = curr->prev;
+    }
+    printf(" -> %d", curr->value);
     printf("]\n");
 }
 
@@ -53,9 +68,10 @@ int count_list(Node *list) {
     int count = 0;
     Node *head = list->next;
     Node *curr = head;
-    if (!curr) return 0;
-    ++count;
-    curr = curr->next;
+    if (curr) {
+        ++count;
+        curr = curr->next;
+    }
     while (curr && curr != head) {
         ++count;
         curr = curr->next;
@@ -66,36 +82,36 @@ int count_list(Node *list) {
 // insertion
 
 void prepend(Node *list, int value) {
-    Node *oldhead = list->next;
-    Node *newhead = malloc(sizeof(Node));
-    newhead->value = value;
-    if (!oldhead) {
-        newhead->next = newhead;
-        list->next = newhead;
-        return;
-    }
-    newhead->next = oldhead;
-    list->next = newhead;
-    Node *curr = oldhead;
-    while (curr->next && curr->next != oldhead)
-        curr = curr->next;
-    curr->next = newhead;
-}
-
-void append(Node *list, int value) {
-    Node *node = malloc(sizeof(Node));
     Node *head = list->next;
+    Node *node = malloc(sizeof(Node));
     node->value = value;
     if (!head) {
         node->next = node;
+        node->prev = node;
         list->next = node;
         return;
     }
-    Node *curr = head;
-    while (curr->next && curr->next != head) 
-        curr = curr->next;
-    curr->next = node;
     node->next = head;
+    node->prev = head->prev;
+    head->prev->next = node;
+    head->prev = node;
+    list->next = node;
+}
+
+void append(Node *list, int value) {
+    Node *head = list->next;
+    Node *node = malloc(sizeof(Node));
+    node->value = value;
+    if (!head) {
+        node->next = node;
+        node->prev = node;
+        list->next = node;
+        return;
+    }
+    node->next = head;
+    node->prev = head->prev;
+    head->prev->next = node;
+    head->prev = node;
 }
 
 void insert(Node *list, int index, int value) {
@@ -105,18 +121,19 @@ void insert(Node *list, int index, int value) {
         return;
     }
     else if (!head) return;
-    Node *prev = head, *curr = head->next;
+    Node *curr = head->next;
     int counter = 1;
-    while (curr && curr != head && counter < index) {
-        prev = curr;
-        curr = curr->next;
+    while (curr != head && counter < index) {
         ++counter;
+        curr = curr->next;
     }
     if (counter == index) {
         Node *node = malloc(sizeof(Node));
         node->value = value;
-        node->next = prev->next;
-        prev->next = node;
+        node->next = curr;
+        node->prev = curr->prev;
+        curr->prev->next = node;
+        curr->prev = node;
     }
 }
 
@@ -125,20 +142,18 @@ void insert(Node *list, int index, int value) {
 int pop_left(Node *list) {
     Node *oldhead = list->next;
     if (!oldhead) return 0;
-    if (oldhead == oldhead->next) {
+    else if (oldhead == oldhead->next) {
         int value = oldhead->value;
         free(oldhead);
         list->next = NULL;
         return value;
     }
     Node *newhead = oldhead->next;
+    newhead->prev = oldhead->prev;
+    oldhead->prev->next = newhead;
+    list->next = newhead;
     int value = oldhead->value;
     free(oldhead);
-    list->next = newhead;
-    Node *curr = newhead;
-    while (curr->next && curr->next != oldhead) 
-        curr = curr->next;
-    curr->next = newhead;
     return value;
 }
 
@@ -151,33 +166,35 @@ int pop_right(Node *list) {
         list->next = NULL;
         return value;
     }
-    Node *curr = head, *prev = list;
-    while (curr->next && curr->next != head) {
-        prev = curr;
-        curr = curr->next;
-    }
-    int value = curr->value;
-    free(curr);
-    prev->next = head;
+    Node *tail = head->prev;
+    tail->prev->next = tail->next;
+    tail->next->prev = tail->prev;
+    int value = tail->value;
+    free(tail);
     return value;
 }
 
 int delete(Node *list, int index) {
-    Node *head = list->next;
     if (index == 0) return pop_left(list);
-    else if (!head) return 0;
-    Node *prev = head, *curr = head->next;
+    Node *head = list->next;
+    if (!head) return 0;
+    else if (head == head->next) {
+        int value = head->value;
+        free(head);
+        list->next = NULL;
+        return value;
+    }
     int counter = 1;
+    Node *curr = head->next;
     while (curr && curr != head && counter < index) {
-        prev = curr;
-        curr = curr->next;
         ++counter;
+        curr = curr->next;
     }
     if (counter == index) {
+        curr->next->prev = curr->prev;
+        curr->prev->next = curr->next;
         int value = curr->value;
-        Node *next = curr->next;
         free(curr);
-        prev->next = next;
         return value;
     }
     return 0;
@@ -194,6 +211,7 @@ int *get_value_address(Node *list, int index) {
     if (counter == index) return &(curr->value);
     return NULL;
 }
+    
 
 void ascending_sort(Node *list) {
     int *ith, *jth, temp;

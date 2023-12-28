@@ -27,12 +27,17 @@ void delete_list(Node *list) {
 // traversal
 
 void print_list(Node *list) {
+    putchar('[');
     Node *curr = list->next;
-    while (curr) {
-        printf("%d ", curr->value);
+    if (curr) {
+        printf("%d", curr->value);
         curr = curr->next;
     }
-    putchar('\n');
+    while (curr) {
+        printf(", %d", curr->value);
+        curr = curr->next;
+    }
+    printf("]\n");
 }
 
 int count_list(Node *list) {
