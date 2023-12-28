@@ -34,11 +34,11 @@ void print_matrix(int **matrix, int rows, int cols)
     }
 }
 
-void add_matrices_loop(int **result, int **A, int **B, int rows, int cols)
+void sub_matrices_loop(int **result, int **A, int **B, int rows, int cols)
 {
     for (int i = 0; i < rows; ++i)
         for (int j = 0; j < cols; ++j)
-            result[i][j] = A[i][j] + B[i][j];
+            result[i][j] = A[i][j] - B[i][j];
 }
 
 /**
@@ -59,23 +59,23 @@ void add_matrices_loop(int **result, int **A, int **B, int rows, int cols)
  * @param cols
  * Number of columns to be added from (x, y).
 */
-void add_matrices(int **result, int **A, int **B,
+void sub_matrices(int **result, int **A, int **B,
                   int x, int y, int rows, int cols)
 {
     if (rows == 1 && cols == 1)
-        result[x][y] = A[x][y] + B[x][y];
+        result[x][y] = A[x][y] - B[x][y];
     else if (rows == 1) {
-        add_matrices(result, A, B, x, y, rows, cols/2);
-        add_matrices(result, A, B, x, y+cols/2, rows, cols-cols/2);
+        sub_matrices(result, A, B, x, y, rows, cols/2);
+        sub_matrices(result, A, B, x, y+cols/2, rows, cols-cols/2);
     }
     else if (cols == 1) {
-        add_matrices(result, A, B, x, y, rows/2, cols);
-        add_matrices(result, A, B, x+rows/2, y, rows-rows/2, cols);
+        sub_matrices(result, A, B, x, y, rows/2, cols);
+        sub_matrices(result, A, B, x+rows/2, y, rows-rows/2, cols);
     }
     else {
-        add_matrices(result, A, B, x, y, rows/2, cols/2);
-        add_matrices(result, A, B, x+rows/2, y, rows-rows/2, cols/2);
-        add_matrices(result, A, B, x, y+cols/2, rows/2, cols-cols/2);
-        add_matrices(result, A, B, x+rows/2, y+cols/2, rows-rows/2, cols-cols/2);
+        sub_matrices(result, A, B, x, y, rows/2, cols/2);
+        sub_matrices(result, A, B, x+rows/2, y, rows-rows/2, cols/2);
+        sub_matrices(result, A, B, x, y+cols/2, rows/2, cols-cols/2);
+        sub_matrices(result, A, B, x+rows/2, y+cols/2, rows-rows/2, cols-cols/2);
     }
 }

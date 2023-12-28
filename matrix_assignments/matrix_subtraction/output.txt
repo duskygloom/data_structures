@@ -1,0 +1,22 @@
+gcc ./main.c && ./a.out 
+Rows, columns: 3 2
+
+Matrix A
+Row 0: 4 1
+Row 1: 4 2
+Row 2: 5 6
+
+Matrix B
+Row 0: 2 5
+Row 1: 1 5 
+Row 2: 1 0
+
+Matrix A-B
+2 -4 
+3 -3 
+4 6 
+
+Matrix A-B using loop
+2 -4 
+3 -3 
+4 6
