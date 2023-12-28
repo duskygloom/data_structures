@@ -1,4 +1,4 @@
-#include "../tree.h"
+#include "tree.h"
 
 void insert(Node *root, int value);
 void insert_node(Node *root, Node *node);

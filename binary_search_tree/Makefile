@@ -1,18 +1,24 @@
 CC 		= gcc
 BUILD	= build
-OBJECTS = $(BUILD)/tree.o $(BUILD)/bst.o $(BUILD)/main.o
-BINARY 	= a.exe
+OBJECTS = $(BUILD)/tree.o $(BUILD)/bst.o
+BINARY 	= bst
 
-all: $(BINARY)
+all: test
 
-$(BINARY): $(OBJECTS) 
-	$(CC) $(OBJECTS) -o $(BINARY) -g
+main: $(BUILD)/main.o $(OBJECTS) 
+	$(CC) $^ -o $(BINARY) -g
 
-$(BUILD)/tree.o: ../tree.c
-	$(CC) $^ -o $@ -c
+test: $(BUILD)/test.o $(OBJECTS) 
+	$(CC) $^ -o $(BINARY) -g
 
 $(BUILD)/%.o: %.c
 	$(CC) $^ -o $@ -c
+
+init:
+	mkdir $(BUILD)
+
+run:
+	./$(BINARY)
 
 clean:
 	rm $(BUILD)/*.o
