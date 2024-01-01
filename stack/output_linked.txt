@@ -1,0 +1,136 @@
+make clean main_linked run
+rm build/*
+gcc main_linked.c -o build/main_linked.o -c -Wall -g
+gcc stack_linked.c -o build/stack_linked.o -c -Wall -g
+gcc linked_list.c -o build/linked_list.o -c -Wall -g
+gcc build/main_linked.o build/stack_linked.o build/linked_list.o -o stack -Wall -g
+./stack
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Created a new stack.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 14
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 16
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Top value: 16
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[16, 14, 12]
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 4
+Popped 16.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Top value: 14
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[14, 12]
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 2
+Deleted the stack.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Created a new stack.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 2
+Deleted the stack.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 0

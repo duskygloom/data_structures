@@ -1,0 +1,158 @@
+make clean main run
+rm build/*
+gcc main.c -o build/main.o -c -Wall -g
+gcc stack.c -o build/stack.o -c -Wall -g
+gcc build/main.o build/stack.o -o stack -Wall -g
+./stack
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Size: 4
+Created a new stack.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 14
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 15
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[15, 14, 12]
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Top value: 15
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 4
+Popped 15.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 4
+Popped 14.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[12]
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Size: 2
+Created a new stack.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 14
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 5
+Stack overflow.
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Top value: 14
+
+1. Create stack.
+2. Delete stack.
+3. Push.
+4. Pop.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 0

@@ -1,0 +1,181 @@
+make clean main run
+rm build/*
+gcc main.c -o build/main.o -c -Wall -g
+gcc circular_queue.c -o build/circular_queue.o -c -Wall -g
+gcc build/main.o build/circular_queue.o -o circular_queue -Wall -g
+./circular_queue
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Size: 4
+Created a new queue.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 24
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 36
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 12
+Rear value: 36
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[12, 24, 36]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 4
+Popped 12.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 24
+Rear value: 36
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[24, 36]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 2
+Deleted the queue.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Size: 2
+Created a new queue.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 36
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+Overflow.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 12
+Rear value: 36
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[12, 36]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 0

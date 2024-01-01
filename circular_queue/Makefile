@@ -1,9 +1,9 @@
 CC		= gcc
 ARGS	= -Wall -g
 BUILD	= build
-OBJECTS	= $(BUILD)/queue.o
-OBJECTS_LINKED = $(BUILD)/queue_linked.o $(BUILD)/linked_list.o
-BINARY	= queue
+OBJECTS	= $(BUILD)/circular_queue.o
+OBJECTS_LINKED = $(BUILD)/circular_queue_linked.o $(BUILD)/linked_list.o
+BINARY	= circular_queue
 
 all: main_linked
 

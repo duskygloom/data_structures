@@ -38,10 +38,9 @@ static inline bool is_operator(int ch)
     return ch == '^' || ch == '*' || ch == '/' || ch == '%' || ch == '+' || ch == '-';
 }
 
-Stack *read_expression()
+Queue *read_expression()
 {
-    char *operators[] = {"+", "-", "*", "/", "%%", "^"};
-    Stack *expression = create_stack(MAX_TOKENS);
+    Queue *expression = create_stack(MAX_TOKENS);
     String *buffer = create_empty_string(5);
     int ch = getchar();
     while (ch != '\n' && ch != EOF) {
@@ -77,17 +76,17 @@ Stack *read_expression()
  * or if there is a opening bracket at top of opstack
  * or if the priority of operator is higher than the top.
 */
-static inline bool to_opstack(const Stack *opstack, Priority p)
+static inline bool to_opstack(const Queue *opstack, Priority p)
 {
     return is_empty_stack(opstack) || samestr(peek(opstack), "(") || p > get_priority(peek(opstack));
 }
 
-Stack *get_postfix(const Stack *infix)
+Queue *get_postfix(const Queue *infix)
 {
     String **array = infix->array;
     int length = infix->top;
-    Stack *postfix  = create_stack(length);
-    Stack *opstack = create_stack(length);
+    Queue *postfix  = create_stack(length);
+    Queue *opstack = create_stack(length);
     for (int i = 0; i < length && array[i]; ++i) {
         Priority p = get_priority(array[i]);
         if (samestr(array[i], "("))
@@ -122,12 +121,12 @@ int power(int base, int exp)
     return result;
 }
 
-int solve_postfix(const Stack *postfix)
+int solve_postfix(const Queue *postfix)
 {
     int result = 0;
     char buffer[MAX_TOKEN_LEN+1];
     int length = postfix->top;
-    Stack *opstack = create_stack(length);
+    Queue *opstack = create_stack(length);
     for (int i = 0; i < length; ++i) {
         if (get_priority(postfix->array[i]) == NO_PRIORITY)
             push(opstack, postfix->array[i]);

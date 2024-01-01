@@ -1,0 +1,5 @@
+gcc selection_sort.c && ./a.out 
+Length of array: 4
+4 elements: 13 3 16 9
+Sorted array (ascending): 3 9 13 16
+Sorted array (descending): 16 13 9 3

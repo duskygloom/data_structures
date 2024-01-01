@@ -15,18 +15,11 @@ void delete_string(String *string);
 
 static inline void print_string(const String *string)
 {
-    fputs(string->cstring, stdout);
-}
-
-static inline void print_string_on(const String *string, FILE *stream)
-{
-    fputs(string->cstring, stream);
+    printf("%s", string->cstring);
 }
 
 void append_cstr(String *dest, const char *src);
 void append_char(String *dest, char ch);
-void prepend_cstr(String *dest, const char *src);
-void prepend_char(String *dest, char ch);
 
 static inline void concat_str(String *dest, const String *src)
 {

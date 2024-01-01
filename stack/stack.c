@@ -2,19 +2,14 @@
 
 #include <stdlib.h>
 
-// #define DEBUG_MODE
-
-Stack *create_stack(int maxsize)
+Queue *create_stack(int maxsize)
 {
-    Stack *stack = malloc(sizeof(Stack));
+    Queue *stack = malloc(sizeof(Queue));
     if (stack) {
         stack->maxsize  = maxsize;
         stack->top      = -1;
-        stack->array    = calloc(maxsize, sizeof(type));
+        stack->array    = calloc(maxsize, sizeof(int));
     }
-    #ifdef DEBUG_MODE
-    printf("Created stack: %p(%d)\n", stack, maxsize);
-    #endif
     return stack;
 }
 
@@ -23,27 +18,19 @@ Stack *create_stack(int maxsize)
  * All the functions assume that the stack is not NULL.
 */
 
-void delete_stack(Stack *stack)
+void delete_stack(Queue *stack)
 {
     if (stack->array) free(stack->array);
-    #ifdef DEBUG_MODE
-    printf("Deleted stack: %p(%d)\n", stack, stack->maxsize);
-    #endif
     free(stack);
 }
 
-void push(Stack *stack, type value)
+void push(Queue *stack, int value)
 {
     if (stack->top >= stack->maxsize-1) {
         printf("Stack overflow.\n");
         return;
     }
     stack->array[++stack->top] = value;
-    #ifdef DEBUG_MODE
-    printf("Pushing into stack: ");
-    print_type(type);
-    printf("->%d\n", stack->top);
-    #endif
 }
 
 /**
@@ -57,30 +44,33 @@ void push(Stack *stack, type value)
  * the top.
  * The top value can be overwritten when it is pushed.
  * It will also not be shown while printing...
- * So it is basically deleting...?
+ * So it is basically deleting.
 */
-type pop(Stack *stack)
+int pop(Queue *stack)
 {
-    if (stack->top < 0) {
+    if (is_empty_stack(stack)) {
         printf("Stack underflow.\n");
-        return TYPE_NULL_VALUE;
+        return -1;
     }
-    #ifdef DEBUG_MODE
-    printf("Popping from stack: ");
-    print_type(stack->array[stack->top]);
-    printf("->%d\n", stack->top);
-    #endif
     return stack->array[stack->top--];
 }
 
-void print_stack(Stack *stack)
+int peek(Queue *stack)
+{
+    if (is_empty_stack(stack)) {
+        printf("Empty stack.\n");
+        return -1;
+    }
+    return stack->array[stack->top];
+}
+
+void print_stack(Queue *stack)
 {
     printf("[");
-    if (stack->top >= 0)
-        print_type(stack->array[0]);
-    for (int i = 1; i <= stack->top; ++i) {
-        printf(", ");
-        print_type(stack->array[i]);
+    if (!is_empty_stack(stack))
+        printf("%d", stack->array[stack->top]);
+    for (int i = stack->top-1; i >= 0; --i) {
+        printf(", %d", stack->array[i]);
     }
     printf("]\n");
 }

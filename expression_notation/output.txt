@@ -1,0 +1,22 @@
+make clean main
+rm build/*
+gcc main.c -o build/main.o -c -g
+gcc expressions.c -o build/expressions.o -c -g
+gcc stack.c -o build/stack.o -c -g
+gcc string.c -o build/string.o -c -g
+gcc build/main.o build/expressions.o build/stack.o build/string.o -o postfix -g
+
+./postfix 
+Infix: 2 + 3 * 0 + 4 / 9   
+Postfix: 2 3 0 * + 4 9 / +
+Solution: 2
+
+./postfix 
+Infix: (1 + 2) - 3 * (6 + 2)
+Postfix: 1 2 + 3 6 2 + * -
+Solution: -21
+
+./postfix 
+Infix: (4^4 - 4*2*6) / (2*2)
+Postfix: 4 4 ^ 4 2 * 6 * - 2 2 * /
+Solution: 52

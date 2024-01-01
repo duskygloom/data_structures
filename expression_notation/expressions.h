@@ -23,10 +23,10 @@ typedef enum PRIORITY {
 
 Priority get_priority(const String *operator);
 
-Stack *read_expression();
+Queue *read_expression();
 
-Stack *get_postfix(const Stack *infix);
+Queue *get_postfix(const Queue *infix);
 
-int solve_postfix(const Stack *postfix);
+int solve_postfix(const Queue *postfix);
 
 #endif

@@ -1,6 +1,5 @@
-#include "queue.h"
+#include "queue_linked.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 int get_user_choice();
@@ -25,9 +24,7 @@ int main()
                     printf("Delete the queue before creating another.\n");
                     break;
                 }
-                printf("Size: ");
-                scanf("%d", &value);
-                queue = create_queue(value);
+                queue = create_queue();
                 printf("Created a new queue.\n");
                 break;
             case 2:
@@ -57,7 +54,7 @@ int main()
                     break;
                 }
                 value = dequeue(queue);
-                printf("Popped %d.\n", value);
+                printf("Dequeued %d.\n", value);
                 break;
             case 5:
                 if (!queue) {

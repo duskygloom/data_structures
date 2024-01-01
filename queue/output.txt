@@ -1,0 +1,150 @@
+make clean main run
+rm build/*
+gcc main.c -o build/main.o -c -Wall -g
+gcc queue.c -o build/queue.o -c -Wall -g
+gcc build/main.o build/queue.o -o queue -Wall -g
+./queue
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Size: 3
+Created a new queue.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 10
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 10
+Rear value: 12
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[10, 12]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 20
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 16
+Overflow.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 10
+Rear value: 20
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[10, 12, 20]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 4
+Popped 10.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 4
+Popped 12.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 20
+Rear value: 20
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[20]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 0

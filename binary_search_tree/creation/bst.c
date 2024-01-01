@@ -19,11 +19,6 @@ void insert_node(Node *root, Node *node) {
 }
 
 void remove_node(Node *root, Node *prev, int value) {
-    // if (prev)
-    //     printf("root: %x %d, prev: %x %d, value: %d\n", root, root->value, prev, prev->value, value);
-    // else
-    //     printf("root: %x %d, prev: %x %d, value: %d\n", root, root->value, prev, 0, value);
-
     if (prev && root && root->value == value) {
         Node *left = root->left;
         Node *right = root->right;

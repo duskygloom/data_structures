@@ -1,0 +1,189 @@
+make clean main_linked run
+rm build/*
+gcc main_linked.c -o build/main_linked.o -c -Wall -g
+gcc queue_linked.c -o build/queue_linked.o -c -Wall -g
+gcc linked_list.c -o build/linked_list.o -c -Wall -g
+gcc build/main_linked.o build/queue_linked.o build/linked_list.o -o queue -Wall -g
+./queue
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Created a new queue.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 12
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 14
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 16
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 18
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 12
+Rear value: 18
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[12, 14, 16, 18]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 4
+Dequeued 12.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 20
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 14
+Rear value: 20
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[14, 16, 18, 20]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 2
+Deleted the queue.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 1
+Created a new queue.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 20
+Invalid choice.
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 3
+Value: 20
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 5
+Front value: 20
+Rear value: 20
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 6
+[20]
+
+1. Create queue.
+2. Delete queue.
+3. Enqueue.
+4. Dequeue.
+5. Peek.
+6. Print.
+0. Exit.
+Response: 0

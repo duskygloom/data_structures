@@ -4,8 +4,8 @@
 int main()
 {
     printf("Infix: ");
-    Stack *infix = read_expression();
-    Stack *postfix = get_postfix(infix);
+    Queue *infix = read_expression();
+    Queue *postfix = get_postfix(infix);
     delete_stack(infix);
     printf("Postfix:");
     for (int i = 0; i < postfix->top; ++i) {

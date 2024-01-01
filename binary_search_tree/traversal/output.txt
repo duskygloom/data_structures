@@ -1,0 +1,68 @@
+make clean main run
+rm build/*.o
+gcc main.c -o build/main.o -c -Wall -g
+gcc tree.c -o build/tree.o -c -Wall -g
+gcc bst.c -o build/bst.o -c -Wall -g
+gcc build/main.o build/tree.o build/bst.o -o bst -Wall -g
+./bst
+
+1. Create.
+2. Delete.
+3. Preorder.
+4. Inorder.
+5. Reverse inorder.
+6. Postorder.
+0. Exit.
+Response: 1
+Number of elements: 6
+Elements: 12 5 14 56 7 8
+Elements: Created the tree.
+
+1. Create.
+2. Delete.
+3. Preorder.
+4. Inorder.
+5. Reverse inorder.
+6. Postorder.
+0. Exit.
+Response: 3
+Preorder: 12 5 7 8 14 56
+
+1. Create.
+2. Delete.
+3. Preorder.
+4. Inorder.
+5. Reverse inorder.
+6. Postorder.
+0. Exit.
+Response: 4
+Inorder: 5 7 8 12 14 56
+
+1. Create.
+2. Delete.
+3. Preorder.
+4. Inorder.
+5. Reverse inorder.
+6. Postorder.
+0. Exit.
+Response: 5
+Reverse inorder: 56 14 12 8 7 5
+
+1. Create.
+2. Delete.
+3. Preorder.
+4. Inorder.
+5. Reverse inorder.
+6. Postorder.
+0. Exit.
+Response: 6
+Postorder: 8 7 5 56 14 12
+
+1. Create.
+2. Delete.
+3. Preorder.
+4. Inorder.
+5. Reverse inorder.
+6. Postorder.
+0. Exit.
+Response: 0

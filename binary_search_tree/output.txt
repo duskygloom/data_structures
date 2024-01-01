@@ -1,0 +1,135 @@
+make clean main run
+rm build/*.o
+gcc main.c -o build/main.o -c -Wall -g
+gcc tree.c -o build/tree.o -c -Wall -g
+gcc bst.c -o build/bst.o -c -Wall -g
+gcc build/main.o build/tree.o build/bst.o -o bst -Wall -g
+./bst
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 1
+Root: 12
+Created root of the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 3
+Value: 10
+Inserted value into the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 3
+Value: 14
+Inserted value into the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 2
+Deleted tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 1
+Root: 13
+Created root of the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 3
+Value: 10
+Inserted value into the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 3
+Value: 15
+Inserted value into the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 5
+13
+  10
+  15
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 4
+Value: 15
+Removed value from the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 5
+13
+  10
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 4
+Value: 13
+Removed value from the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 5
+13
+  10
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 0

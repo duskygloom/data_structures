@@ -1,21 +1,29 @@
 CC		= gcc
+ARGS	= -Wall -g
 BUILD	= build
 OBJECTS	= $(BUILD)/stack.o
-BINARY	= a.exe
+OBJECTS_LINKED = $(BUILD)/stack_linked.o $(BUILD)/linked_list.o
+BINARY	= stack
 
-all: test
+all: main_linked
 
 main: $(BUILD)/main.o $(OBJECTS)
-	$(CC) $^ -o $(BINARY) -g
+	$(CC) $^ -o $(BINARY) $(ARGS)
 
-test: $(BUILD)/test.o $(OBJECTS)
-	$(CC) $^ -o $(BINARY) -g
+main_linked: $(BUILD)/main_linked.o $(OBJECTS_LINKED)
+	$(CC) $^ -o $(BINARY) $(ARGS)
 
 $(BINARY): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $(BINARY) -g
+	$(CC) $(OBJECTS) -o $(BINARY) $(ARGS)
 
 $(BUILD)/%.o: %.c
-	$(CC) $^ -o $@ -c -g
+	$(CC) $^ -o $@ -c $(ARGS)
+
+init:
+	mkdir $(BUILD)
 
 clean:
 	rm $(BUILD)/*
+
+run:
+	./$(BINARY)

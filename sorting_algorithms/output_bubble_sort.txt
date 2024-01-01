@@ -1,0 +1,5 @@
+gcc bubble_sort.c && ./a.out 
+Length of array: 4
+4 elements: 34 1 6 67
+Sorted array (ascending): 1 6 34 67
+Sorted array (descending): 67 34 6 1

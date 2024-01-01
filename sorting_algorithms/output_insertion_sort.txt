@@ -1,0 +1,5 @@
+gcc insertion_sort.c && ./a.out 
+Length of array: 4
+4 elements: 12 5 124 7
+Sorted array (ascending): 5 7 12 124
+Sorted array (descending): 124 12 7 5

@@ -1,0 +1,114 @@
+make clean main run
+rm build/*.o
+gcc main.c -o build/main.o -c -Wall -g
+gcc tree.c -o build/tree.o -c -Wall -g
+gcc bst.c -o build/bst.o -c -Wall -g
+gcc build/main.o build/tree.o build/bst.o -o bst -Wall -g
+./bst
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 1
+Root: 20
+Created root of the tree.
+Root of a tree cannot be deleted without deleting the entire tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 3
+Number of elements: 10
+Elements: 20 14 6 9 124 7 3 6 8 34  
+Inserted value into the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 5
+Tree:
+                124
+                        34
+        20
+20
+        14
+                        9
+                                        8
+                                7
+                                        6
+                6
+                        3
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 4
+Value: 6
+Removed value from the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 5
+Tree:
+                124
+                        34
+        20
+20
+        14
+                        9
+                                        8
+                                7
+                                        6
+                3
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 4
+Value: 6
+Removed value from the tree.
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 5
+Tree:
+                124
+                        34
+        20
+20
+        14
+                        9
+                                        8
+                                7
+                3
+
+1. Create.
+2. Delete.
+3. Insert.
+4. Remove.
+5. Print.
+0. Exit.
+Response: 0

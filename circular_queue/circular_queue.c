@@ -33,15 +33,37 @@ void print_queue(const Queue *queue)
 
 bool enqueue(Queue *queue, int value)
 {
-    if (queue->rear - queue->front == queue->maxsize)
+    if (queue->rear - queue->front == queue->maxsize) {
+        printf("Overflow.\n");
         return false;
+    }
     queue->array[(queue->rear)++] = value;
     return true;
 }
 
 int dequeue(Queue *queue)
 {
-    if (queue->front == queue->rear)
-        return 0;
+    if (is_empty_queue(queue)) {
+        printf("Underflow.\n");
+        return -1;
+    }
     return queue->array[(queue->front)++];
+}
+
+int peek_front(Queue *queue)
+{
+    if (is_empty_queue(queue)) {
+        printf("Empty queue.\n");
+        return -1;
+    }
+    return queue->array[queue->front];
+}
+
+int peek_rear(Queue *queue)
+{
+    if (is_empty_queue(queue)) {
+        printf("Empty queue.\n");
+        return -1;
+    }
+    return queue->array[queue->rear-1];
 }

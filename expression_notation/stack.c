@@ -2,9 +2,9 @@
 
 #include <stdlib.h>
 
-Stack *create_stack(int maxsize)
+Queue *create_stack(int maxsize)
 {
-    Stack *stack = malloc(sizeof(Stack));
+    Queue *stack = malloc(sizeof(Queue));
     if (stack) {
         stack->maxsize  = maxsize;
         stack->top      = 0;
@@ -18,13 +18,13 @@ Stack *create_stack(int maxsize)
  * All the functions assume that the stack is not NULL.
 */
 
-void delete_stack(Stack *stack)
+void delete_stack(Queue *stack)
 {
     if (stack->array) free(stack->array);
     free(stack);
 }
 
-void push(Stack *stack, String *value)
+void push(Queue *stack, String *value)
 {
     if (stack->top >= stack->maxsize) {
         printf("Stack overflow.\n");
@@ -46,7 +46,7 @@ void push(Stack *stack, String *value)
  * It will also not be shown while printing...
  * So it is basically deleting...?
 */
-String *pop(Stack *stack)
+String *pop(Queue *stack)
 {
     if (stack->top <= 0) {
         printf("Stack underflow.\n");
@@ -55,7 +55,7 @@ String *pop(Stack *stack)
     return stack->array[--(stack->top)];
 }
 
-void print_stack(const Stack *stack)
+void print_stack(const Queue *stack)
 {
     printf("[");
     if (stack->top > 0)
