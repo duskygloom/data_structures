@@ -5,6 +5,16 @@
 *.exe
 *.out
 *.o
+vgcore*
+
+# exeutables
+stack/stack
+binary_search_tree/bst
+binary_search_tree/creation/bst
+binary_search_tree/traversal/bst
+queue/queue
+circular_queue/circular_queue
+expression_notation/postfix
 
 # test
 test.*
