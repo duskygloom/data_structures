@@ -36,8 +36,8 @@ void print_postorder(const Node *root) {
 
 void print_tree(const Node *root, int spaces) {
     for (int i = 0; i < spaces; ++i) printf("  ");
-    printf("%d\n", root->value);
     if (root->left) print_tree(root->left, spaces+1);
+    printf("%d\n", root->value);
     if (root->right) print_tree(root->right, spaces+1);
 }
 
